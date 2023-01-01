@@ -1,0 +1,9 @@
+﻿  AllegroHelper.cpp
+  Winsock.cpp
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\wingdi.h(118,1): warning C4005: 'ERROR': macro redefinition
+C:\Users\turqo\source\repos\ProjectDuce\HelperLibraries\Networking\Winsock.h(4): message : see previous definition of 'ERROR'
+C:\Users\turqo\source\repos\ProjectDuce\HelperLibraries\Networking\Winsock.cpp(55,20): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
+C:\Users\turqo\source\repos\ProjectDuce\Debug\HelperLibraries.dll : warning LNK4086: entrypoint '_mainCRTStartup' is not __stdcall with 12 bytes of arguments; image may not run
+MSVCRTD.lib(exe_main.obj) : error LNK2019: unresolved external symbol _main referenced in function "int __cdecl invoke_main(void)" (?invoke_main@@YAHXZ)
+C:\Users\turqo\source\repos\ProjectDuce\Debug\HelperLibraries.dll : fatal error LNK1120: 1 unresolved externals

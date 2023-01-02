@@ -181,6 +181,9 @@
       <Project>{95a07ed3-6917-4519-91fc-22484003e3cb}</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\images\soldier.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\packages\AllegroDeps.1.13.0\build\native\AllegroDeps.targets" Condition="Exists('..\packages\AllegroDeps.1.13.0\build\native\AllegroDeps.targets')" />

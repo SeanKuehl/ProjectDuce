@@ -9,6 +9,15 @@ int InitializeAllegro() {
     return SUCCESS;
 }
 
+int InitializeImageAddon() {
+    if (!al_init_image_addon())
+    {
+        printf("couldn't initialize image addon\n");
+        return ERROR;
+    }
+    return SUCCESS;
+}
+
 int InstallKeyboard() {
     if (!al_install_keyboard())
     {
@@ -59,8 +68,19 @@ ALLEGRO_FONT* CreateBuiltInFont() {
     return font;
 }
 
+ALLEGRO_BITMAP* CreateImage(std::string path) {
+    ALLEGRO_BITMAP* image = al_load_bitmap(path.c_str());
+    if (!image)
+    {
+        printf("couldn't load image\n");
+        return NULL;
+    }
+    return image;
+}
+
 void RegisterEventSources(ALLEGRO_EVENT_QUEUE* queue, ALLEGRO_DISPLAY* display, ALLEGRO_TIMER* timer) {
     al_register_event_source(queue, al_get_keyboard_event_source());
     al_register_event_source(queue, al_get_display_event_source(display));
     al_register_event_source(queue, al_get_timer_event_source(timer));
+    al_register_event_source(queue, al_get_mouse_event_source());
 }

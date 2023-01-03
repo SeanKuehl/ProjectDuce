@@ -2,7 +2,7 @@
 #define KEY_RELEASED 2
 #include "AllegroHelper.h"
 #include "Winsock.h"
-#include "library/Entity.h"
+#include "library/Soldier.h"
 
 
 int main() {
@@ -25,7 +25,7 @@ int main() {
 	
 
        
-    Entity sol = Entity("soldier.png");
+    
 
     al_register_event_source(queue, al_get_keyboard_event_source());
     al_register_event_source(queue, al_get_display_event_source(display));
@@ -34,6 +34,7 @@ int main() {
 
     bool done = false;
     bool redraw = true;
+    bool mousePressed = false;
     ALLEGRO_EVENT event;
 
     unsigned char key[ALLEGRO_KEY_MAX];
@@ -41,10 +42,10 @@ int main() {
 
     ALLEGRO_MOUSE_STATE state;
 
-    float x = 100.0;
-    float y = 100.0;
-    float dx = 0.0;
-    float dy = 0.0;
+    int x = 0;
+    int y = 0;
+
+    Soldier sol = Soldier("soldier.png", 1, x, y);
     
 
     al_start_timer(timer);
@@ -62,32 +63,8 @@ int main() {
                 printf("fun\n");
             }
 
-            x += dx;
-            y += dy;
-
-            if (x < 0)
-            {
-                x *= -1;
-                dx *= -1;
-            }
-            if (x > 640)
-            {
-                x -= (x - 640) * 2;
-                dx *= -1;
-            }
-            if (y < 0)
-            {
-                y *= -1;
-                dy *= -1;
-            }
-            if (y > 480)
-            {
-                y -= (y - 480) * 2;
-                dy *= -1;
-            }
-
-            dx *= 0.9;
-            dy *= 0.9;
+            
+            
 
             for (int i = 0; i < ALLEGRO_KEY_MAX; i++)
                 key[i] &= KEY_SEEN;
@@ -96,8 +73,7 @@ int main() {
             break;
 
         case ALLEGRO_EVENT_MOUSE_AXES:
-            dx += event.mouse.dx * 0.1;
-            dy += event.mouse.dy * 0.1;
+            //when mouse moves
             
             break;
 
@@ -119,13 +95,48 @@ int main() {
         if (state.buttons & 1) {
             /* Primary (e.g. left) mouse button is held. */
             //printf("Mouse position: (%d, %d)\n", state.x, state.y);
-            //printf("mouse 1 is down\n");
+            
+
+            if (mousePressed == false) {
+                mousePressed = true;
+                if (sol.ClickedOn(state.x, state.y)) {
+                    sol.ToggleSelected();
+                }
+                else {
+                    if (sol.GetSelected() == true) {
+                        //move to that position
+                        sol.Move(state.x, state.y);
+                        sol.ToggleSelected();   //deselect
+                    }
+                    
+                }
+            }
+            else if (mousePressed) {
+                //do nothing, it's a repeat from the same single click event
+            }
         }
         else if (state.buttons & 2) {
-            //printf("mouse 2 is down\n");
+            printf("mouse 2 is down\n");    //trackpad not working, may need mouse
+
+            if (mousePressed == false) {
+                mousePressed = true;
+                if (sol.GetSelected() == true) {
+                    //get the soldier to shoot at that location
+                }
+            }
+            else if (mousePressed) {
+                //do nothing, it's a repeat from the same single click event
+            }
+
         }
         else {
             //printf("mouse is up\n");
+            if (mousePressed) {
+                mousePressed = false;
+            }
+            else if (mousePressed == false) {
+                //do nothing, it's a repeat from the up event
+            }
         }
         
 
@@ -134,7 +145,7 @@ int main() {
         if (redraw && al_is_event_queue_empty(queue))
         {
             al_clear_to_color(al_map_rgb(0, 0, 0));
-            sol.Render(x,y);
+            sol.Render();
             
             al_flip_display();
 

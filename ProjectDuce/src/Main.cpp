@@ -2,6 +2,7 @@
 #define KEY_RELEASED 2
 #include "AllegroHelper.h"
 #include "Winsock.h"
+#include "library/Entity.h"
 
 
 int main() {
@@ -23,8 +24,8 @@ int main() {
 
 	
 
-    ALLEGRO_BITMAP* soldier = CreateImage("assets/images/soldier.png");    //from ProjectDuce project folder
-    
+       
+    Entity sol = Entity("soldier.png");
 
     al_register_event_source(queue, al_get_keyboard_event_source());
     al_register_event_source(queue, al_get_display_event_source(display));
@@ -133,16 +134,16 @@ int main() {
         if (redraw && al_is_event_queue_empty(queue))
         {
             al_clear_to_color(al_map_rgb(0, 0, 0));
+            sol.Render(x,y);
             
-            al_draw_bitmap(soldier, x, y, 0);
             al_flip_display();
 
             redraw = false;
         }
     }
 
-    al_destroy_bitmap(soldier);
-
+    
+    sol.Destroy();
     
     al_destroy_display(display);
     al_destroy_timer(timer);

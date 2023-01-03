@@ -171,6 +171,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\library\Soldier.cpp" />
+    <ClCompile Include="src\library\Entity.cpp" />
     <ClCompile Include="src\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -183,6 +185,10 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\images\soldier.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\library\Soldier.h" />
+    <ClInclude Include="src\library\Entity.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

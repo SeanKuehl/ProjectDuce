@@ -171,6 +171,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\library\SoldierManager.cpp" />
+    <ClCompile Include="src\library\Bullet.cpp" />
     <ClCompile Include="src\library\Soldier.cpp" />
     <ClCompile Include="src\library\Entity.cpp" />
     <ClCompile Include="src\Main.cpp" />
@@ -184,9 +186,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Image Include="assets\images\bullet.png" />
     <Image Include="assets\images\soldier.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\library\SoldierManager.h" />
+    <ClInclude Include="src\library\Bullet.h" />
     <ClInclude Include="src\library\Soldier.h" />
     <ClInclude Include="src\library\Entity.h" />
   </ItemGroup>

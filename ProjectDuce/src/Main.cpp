@@ -1,8 +1,11 @@
 #define KEY_SEEN     1
 #define KEY_RELEASED 2
+#define PLAYER_ONE 1
+#define PLAYER_TWO 2
+
 #include "AllegroHelper.h"
 #include "Winsock.h"
-#include "library/Soldier.h"
+#include "library/SoldierManager.h"
 
 
 int main() {
@@ -45,7 +48,9 @@ int main() {
     int x = 0;
     int y = 0;
 
-    Soldier sol = Soldier("soldier.png", 1, x, y);
+    
+    SoldierManager man = SoldierManager();
+    man.CreateSoldier("soldier.png", PLAYER_ONE, x, y);
     
 
     al_start_timer(timer);
@@ -99,17 +104,7 @@ int main() {
 
             if (mousePressed == false) {
                 mousePressed = true;
-                if (sol.ClickedOn(state.x, state.y)) {
-                    sol.ToggleSelected();
-                }
-                else {
-                    if (sol.GetSelected() == true) {
-                        //move to that position
-                        sol.Move(state.x, state.y);
-                        sol.ToggleSelected();   //deselect
-                    }
-                    
-                }
+                man.HandleClick(state.x, state.y);
             }
             else if (mousePressed) {
                 //do nothing, it's a repeat from the same single click event
@@ -120,9 +115,9 @@ int main() {
 
             if (mousePressed == false) {
                 mousePressed = true;
-                if (sol.GetSelected() == true) {
-                    //get the soldier to shoot at that location
-                }
+                //if (sol.GetSelected() == true) {
+                //    //get the soldier to shoot at that location
+                //}
             }
             else if (mousePressed) {
                 //do nothing, it's a repeat from the same single click event
@@ -145,7 +140,7 @@ int main() {
         if (redraw && al_is_event_queue_empty(queue))
         {
             al_clear_to_color(al_map_rgb(0, 0, 0));
-            sol.Render();
+            man.Render();
             
             al_flip_display();
 
@@ -154,7 +149,7 @@ int main() {
     }
 
     
-    sol.Destroy();
+    man.Destroy();
     
     al_destroy_display(display);
     al_destroy_timer(timer);

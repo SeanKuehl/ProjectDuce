@@ -51,6 +51,18 @@ public:
 
 	}
 
+	int GetAllegiance() {
+		return allegiance;
+	}
+
+	int GetCenterX() {
+		return (xPosition + (width / 2));
+	}
+
+	int GetCenterY() {
+		return (yPosition + (hieght / 2));
+	}
+
 
 };
 

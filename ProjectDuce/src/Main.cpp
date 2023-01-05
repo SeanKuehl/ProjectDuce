@@ -3,9 +3,11 @@
 #define PLAYER_ONE 1
 #define PLAYER_TWO 2
 
+
 #include "AllegroHelper.h"
 #include "Winsock.h"
 #include "library/SoldierManager.h"
+#include "library/BulletManager.h"
 
 
 int main() {
@@ -51,6 +53,8 @@ int main() {
     
     SoldierManager man = SoldierManager();
     man.CreateSoldier("soldier.png", PLAYER_ONE, x, y);
+
+    BulletManager ban = BulletManager();
     
 
     al_start_timer(timer);
@@ -104,7 +108,7 @@ int main() {
 
             if (mousePressed == false) {
                 mousePressed = true;
-                man.HandleClick(state.x, state.y);
+                man.HandleLeftClick(state.x, state.y);
             }
             else if (mousePressed) {
                 //do nothing, it's a repeat from the same single click event
@@ -115,9 +119,14 @@ int main() {
 
             if (mousePressed == false) {
                 mousePressed = true;
-                //if (sol.GetSelected() == true) {
-                //    //get the soldier to shoot at that location
-                //}
+                
+                Bullet newBullet = man.HandleRightClick(state.x, state.y);
+                if (newBullet.GetIsNull()) {
+                    //no new bullet was returned
+                }
+                else {
+                    ban.AddBullet(newBullet);
+                }
             }
             else if (mousePressed) {
                 //do nothing, it's a repeat from the same single click event
@@ -141,7 +150,7 @@ int main() {
         {
             al_clear_to_color(al_map_rgb(0, 0, 0));
             man.Render();
-            
+            ban.Render();
             al_flip_display();
 
             redraw = false;
@@ -150,7 +159,7 @@ int main() {
 
     
     man.Destroy();
-    
+    ban.Destroy();
     al_destroy_display(display);
     al_destroy_timer(timer);
     al_destroy_event_queue(queue);

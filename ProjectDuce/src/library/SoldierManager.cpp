@@ -1,5 +1,5 @@
 #include "SoldierManager.h"
-
+#include "Bullet.h"
 
 SoldierManager::SoldierManager() {
 
@@ -15,7 +15,7 @@ void SoldierManager::CreateSoldier(std::string imageName, int passedAllegiance, 
 	}
 }
 
-void SoldierManager::HandleClick(int x, int y) {
+void SoldierManager::HandleLeftClick(int x, int y) {
     //check if player one units were clicked on
     for (int i = 0; i < playerOneUnits.size(); i++) {
         if (playerOneUnits.at(i).ClickedOn(x, y)) {
@@ -45,6 +45,28 @@ void SoldierManager::HandleClick(int x, int y) {
             }
         }
     }
+
+
+    
+}
+
+
+Bullet SoldierManager::HandleRightClick(int x, int y) {
+
+    for (int i = 0; i < playerOneUnits.size(); i++) {
+        if (playerOneUnits.at(i).GetSelected() == true) {
+            
+            return Bullet("bullet.png", playerOneUnits.at(i).GetAllegiance(), playerOneUnits.at(i).GetCenterX(), playerOneUnits.at(i).GetCenterY(), x, y);
+        }
+    }
+
+    for (int i = 0; i < playerTwoUnits.size(); i++) {
+        if (playerTwoUnits.at(i).GetSelected() == true) {
+            return Bullet("bullet.png", playerTwoUnits.at(i).GetAllegiance(), playerTwoUnits.at(i).GetCenterX(), playerTwoUnits.at(i).GetCenterY(), x, y);
+        }
+    }
+
+    return Bullet();
 
 
     

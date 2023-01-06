@@ -1,8 +1,6 @@
 ﻿  Main.cpp
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\wingdi.h(118,1): warning C4005: 'ERROR': macro redefinition
 C:\Users\turqo\source\repos\ProjectDuce\HelperLibraries\Allegro\AllegroHelper.h(3): message : see previous definition of 'ERROR'
-  Bullet.cpp
-  BulletManager.cpp
   SoldierManager.cpp
   Generating Code...
   ProjectDuce.vcxproj -> C:\Users\turqo\source\repos\ProjectDuce\x64\Debug\ProjectDuce.exe

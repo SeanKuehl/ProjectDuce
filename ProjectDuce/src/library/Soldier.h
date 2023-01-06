@@ -1,4 +1,6 @@
 #pragma once
+#define PLAYER_ONE 1
+#define PLAYER_TWO 2
 #include "AllegroHelper.h"
 #include "Entity.h"
 #include <string>
@@ -10,14 +12,24 @@ class Soldier : public Entity
 private:
 	int allegiance;	//which player this unit belongs to
 	bool selected = false;	//whether user clicked on this unit or not
+	std::string redSoldierImage = "soldier.png";
+	std::string blueSoldierImage = "EnemySoldier.png";
 
 
 public:
-	Soldier(std::string imageName, int passedAllegiance, int x, int y) {
-		image = CreateImage(imageDirectory + imageName);
+	Soldier(int passedAllegiance, int x, int y) {
+		if (passedAllegiance == PLAYER_ONE) {
+			image = CreateImage(imageDirectory + redSoldierImage);
+		}
+		else if (passedAllegiance == PLAYER_TWO) {
+			image = CreateImage(imageDirectory + blueSoldierImage);
+		}
+		
 		allegiance = passedAllegiance;
 		xPosition = x;
 		yPosition = y;
+		destX = x;
+		destY = y;
 		hieght = al_get_bitmap_height(image);
 		width = al_get_bitmap_width(image);
 	}

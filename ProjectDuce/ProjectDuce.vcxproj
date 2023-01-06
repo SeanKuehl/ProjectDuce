@@ -188,6 +188,7 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\images\bullet.png" />
+    <Image Include="assets\images\EnemySoldier.png" />
     <Image Include="assets\images\soldier.png" />
   </ItemGroup>
   <ItemGroup>

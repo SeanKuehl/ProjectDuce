@@ -18,9 +18,9 @@ void BulletManager::Render() {
 	for (int i = 0; i < activeBulletList.size(); i++) {
 		activeBulletList.at(i).Render();
 		if (activeBulletList.at(i).ReachedDestination() == true) {
-			Bullet temp = activeBulletList.at(i);	
+			/*Bullet temp = activeBulletList.at(i);	
 			activeBulletList.erase(activeBulletList.begin() + i);
-			temp.Destroy();
+			temp.Destroy();*/
 		}
 	}
 }

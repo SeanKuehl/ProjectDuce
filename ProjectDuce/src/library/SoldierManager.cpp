@@ -6,45 +6,55 @@ SoldierManager::SoldierManager() {
 }
 
 
-void SoldierManager::CreateSoldier(std::string imageName, int passedAllegiance, int x, int y) {
+void SoldierManager::CreateSoldier(int passedAllegiance, int x, int y) {
 	if (passedAllegiance == PLAYER_ONE) {
-		playerOneUnits.push_back(Soldier(imageName, passedAllegiance, x, y));
+		playerOneUnits.push_back(Soldier(passedAllegiance, x, y));
 	}
 	else {
-		playerTwoUnits.push_back(Soldier(imageName, passedAllegiance, x, y));
+		playerTwoUnits.push_back(Soldier(passedAllegiance, x, y));
 	}
 }
 
+void SoldierManager::SetPlayerTurn(int passedTurn) {
+    playerTurn = passedTurn;
+}
+
 void SoldierManager::HandleLeftClick(int x, int y) {
-    //check if player one units were clicked on
-    for (int i = 0; i < playerOneUnits.size(); i++) {
-        if (playerOneUnits.at(i).ClickedOn(x, y)) {
-            playerOneUnits.at(i).ToggleSelected();
-        }
-        else {
-            if (playerOneUnits.at(i).GetSelected() == true) {
-                //move to that position
-                playerOneUnits.at(i).Move(x, y);
-                playerOneUnits.at(i).ToggleSelected();  //deselect
+
+    if (playerTurn == PLAYER_ONE) {
+        //check if player one units were clicked on
+        for (int i = 0; i < playerOneUnits.size(); i++) {
+            if (playerOneUnits.at(i).ClickedOn(x, y)) {
+                playerOneUnits.at(i).ToggleSelected();
+            }
+            else {
+                if (playerOneUnits.at(i).GetSelected() == true) {
+                    //move to that position
+                    playerOneUnits.at(i).Move(x, y);
+                    playerOneUnits.at(i).ToggleSelected();  //deselect
+                }
             }
         }
     }
+    
 
 
-
-    //check if player two units were clicked on
-    for (int i = 0; i < playerTwoUnits.size(); i++) {
-        if (playerTwoUnits.at(i).ClickedOn(x, y)) {
-            playerTwoUnits.at(i).ToggleSelected();
-        }
-        else {
-            if (playerTwoUnits.at(i).GetSelected() == true) {
-                //move to that position
-                playerTwoUnits.at(i).Move(x, y);
-                playerTwoUnits.at(i).ToggleSelected();  //deselect
+    if (playerTurn == PLAYER_TWO) {
+        //check if player two units were clicked on
+        for (int i = 0; i < playerTwoUnits.size(); i++) {
+            if (playerTwoUnits.at(i).ClickedOn(x, y)) {
+                playerTwoUnits.at(i).ToggleSelected();
+            }
+            else {
+                if (playerTwoUnits.at(i).GetSelected() == true) {
+                    //move to that position
+                    playerTwoUnits.at(i).Move(x, y);
+                    playerTwoUnits.at(i).ToggleSelected();  //deselect
+                }
             }
         }
     }
+    
 
 
     
@@ -53,18 +63,23 @@ void SoldierManager::HandleLeftClick(int x, int y) {
 
 Bullet SoldierManager::HandleRightClick(int x, int y) {
 
-    for (int i = 0; i < playerOneUnits.size(); i++) {
-        if (playerOneUnits.at(i).GetSelected() == true) {
-            
-            return Bullet("bullet.png", playerOneUnits.at(i).GetAllegiance(), playerOneUnits.at(i).GetCenterX(), playerOneUnits.at(i).GetCenterY(), x, y);
-        }
-    }
+    if (playerTurn == PLAYER_ONE) {
+        for (int i = 0; i < playerOneUnits.size(); i++) {
+            if (playerOneUnits.at(i).GetSelected() == true) {
 
-    for (int i = 0; i < playerTwoUnits.size(); i++) {
-        if (playerTwoUnits.at(i).GetSelected() == true) {
-            return Bullet("bullet.png", playerTwoUnits.at(i).GetAllegiance(), playerTwoUnits.at(i).GetCenterX(), playerTwoUnits.at(i).GetCenterY(), x, y);
+                return Bullet("bullet.png", playerOneUnits.at(i).GetAllegiance(), playerOneUnits.at(i).GetCenterX(), playerOneUnits.at(i).GetCenterY(), x, y);
+            }
         }
     }
+    
+    if (playerTurn == PLAYER_TWO) {
+        for (int i = 0; i < playerTwoUnits.size(); i++) {
+            if (playerTwoUnits.at(i).GetSelected() == true) {
+                return Bullet("bullet.png", playerTwoUnits.at(i).GetAllegiance(), playerTwoUnits.at(i).GetCenterX(), playerTwoUnits.at(i).GetCenterY(), x, y);
+            }
+        }
+    }
+    
 
     return Bullet();
 

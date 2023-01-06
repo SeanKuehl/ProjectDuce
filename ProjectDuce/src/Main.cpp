@@ -47,15 +47,16 @@ int main() {
 
     ALLEGRO_MOUSE_STATE state;
 
-    int x = 0;
-    int y = 0;
+    
 
     
     SoldierManager man = SoldierManager();
-    man.CreateSoldier("soldier.png", PLAYER_ONE, x, y);
+    man.CreateSoldier(PLAYER_ONE, 0, 0);
+    man.CreateSoldier(PLAYER_TWO, 400, 400);
 
     BulletManager ban = BulletManager();
     
+    int playerTurn = PLAYER_ONE;
 
     al_start_timer(timer);
     while (1)
@@ -68,8 +69,14 @@ int main() {
             if (key[ALLEGRO_KEY_ESCAPE])
                 done = true;
 
-            if (key[ALLEGRO_KEY_D]) {
-                printf("fun\n");
+            if (key[ALLEGRO_KEY_E]) {
+                //end turn for now
+                if (playerTurn == PLAYER_ONE) {
+                    playerTurn = PLAYER_TWO;
+                }
+                else {
+                    playerTurn = PLAYER_ONE;
+                }
             }
 
             
@@ -108,6 +115,7 @@ int main() {
 
             if (mousePressed == false) {
                 mousePressed = true;
+                man.SetPlayerTurn(playerTurn);
                 man.HandleLeftClick(state.x, state.y);
             }
             else if (mousePressed) {
@@ -119,7 +127,7 @@ int main() {
 
             if (mousePressed == false) {
                 mousePressed = true;
-                
+                man.SetPlayerTurn(playerTurn);
                 Bullet newBullet = man.HandleRightClick(state.x, state.y);
                 if (newBullet.GetIsNull()) {
                     //no new bullet was returned

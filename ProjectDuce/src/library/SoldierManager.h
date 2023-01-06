@@ -11,13 +11,16 @@ class SoldierManager
 private:
 	std::vector<Soldier> playerOneUnits;
 	std::vector<Soldier> playerTwoUnits;
+	int playerTurn;
 
 
 
 public: 
 	SoldierManager();
 
-	void CreateSoldier(std::string imageName, int passedAllegiance, int x, int y);
+	void CreateSoldier(int passedAllegiance, int x, int y);
+
+	void SetPlayerTurn(int passedTurn);
 
 	void HandleLeftClick(int x, int y);
 

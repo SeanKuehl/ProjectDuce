@@ -44,6 +44,9 @@
     <Image Include="assets\images\bullet.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="assets\images\EnemySoldier.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\library\Entity.h">

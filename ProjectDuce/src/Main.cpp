@@ -246,7 +246,13 @@ int main() {
 
             //wait for message from other
             std::string message = "";
-            message = ReceiveString(s); //this should be blocking
+            if (clientOrServer == 2) {
+                message = ReceiveString(client); //this should be blocking
+            }
+            else {
+                message = ReceiveString(s); //this should be blocking
+            }
+            
             std::cout << message << std::endl;
             //if we got message it means player turn changed
             if (playerTurn == PLAYER_ONE) {

@@ -80,6 +80,7 @@ int main() {
     bool done = false;
     bool redraw = true;
     bool mousePressed = false;
+    bool eKeyPressed = false;
     ALLEGRO_EVENT event;
 
     unsigned char key[ALLEGRO_KEY_MAX];
@@ -115,25 +116,37 @@ int main() {
                 if (key[ALLEGRO_KEY_E]) {
                     //key press gives duplicate events
                     //end turn for now
-                    std::cout << "funky" << std::endl;
-                    if (playerTurn == PLAYER_ONE) {
-                        playerTurn = PLAYER_TWO;
-                    }
-                    else {
-                        playerTurn = PLAYER_ONE;
-                    }
+                    if (eKeyPressed == false) {
+                        eKeyPressed = true;
+                        if (playerTurn == PLAYER_ONE) {
+                            playerTurn = PLAYER_TWO;
+                        }
+                        else {
+                            playerTurn = PLAYER_ONE;
+                        }
 
-                    if (clientOrServer == 2) {
-                        std::cout << "server message sent" << std::endl;
-                        int check = SendString(client, "end turn pressed");
-                        std::cout << check << std::endl;
+                        if (clientOrServer == 2) {
+                            std::cout << "server message sent" << std::endl;
+                            int check = SendString(client, "end turn pressed");
+                            std::cout << check << std::endl;
+                        }
+                        else {
+                            std::cout << "client message sent" << std::endl;
+                            int check = SendString(s, "end turn pressed");
+                            std::cout << check << std::endl;
+                        }
                     }
                     else {
-                        std::cout << "client message sent" << std::endl;
-                        int check = SendString(s, "end turn pressed");
-                        std::cout << check << std::endl;
+                        //duplicate from same key down event
                     }
                     
+                    
+                }
+
+                if (!key[ALLEGRO_KEY_E]) {
+                    if (eKeyPressed) {
+                        eKeyPressed = false;
+                    }
                 }
 
 
@@ -156,6 +169,7 @@ int main() {
                 break;
             case ALLEGRO_EVENT_KEY_UP:
                 key[event.keyboard.keycode] &= KEY_RELEASED;
+                
                 break;
 
             case ALLEGRO_EVENT_DISPLAY_CLOSE:

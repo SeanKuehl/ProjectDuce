@@ -32,10 +32,11 @@ void SoldierManager::HandleLeftClick(int x, int y, std::vector<int> moveCoords) 
                 playerOneUnits.at(i).ToggleSelected();
             }
             else {
-                if (playerOneUnits.at(i).GetSelected() == true) {
+                if (playerOneUnits.at(i).GetSelected() == true && playerOneUnits.at(i).GetActionTaken() == false) {
                     //move to that position
                     playerOneUnits.at(i).Move(moveCoords.at(0), moveCoords.at(1), tileMeasures);
                     playerOneUnits.at(i).ToggleSelected();  //deselect
+                    playerOneUnits.at(i).SetActionTaken(true);
                 }
             }
         }
@@ -50,10 +51,12 @@ void SoldierManager::HandleLeftClick(int x, int y, std::vector<int> moveCoords) 
                 playerTwoUnits.at(i).ToggleSelected();
             }
             else {
-                if (playerTwoUnits.at(i).GetSelected() == true) {
+                if (playerTwoUnits.at(i).GetSelected() == true && playerTwoUnits.at(i).GetActionTaken() == false) {
                     //move to that position
+                    
                     playerTwoUnits.at(i).Move(moveCoords.at(0), moveCoords.at(1), tileMeasures);
                     playerTwoUnits.at(i).ToggleSelected();  //deselect
+                    playerOneUnits.at(i).SetActionTaken(true);
                 }
             }
         }
@@ -91,8 +94,9 @@ Bullet SoldierManager::HandleRightClick(int x, int y, std::vector<int> moveCoord
 
     if (playerTurn == PLAYER_ONE) {
         for (int i = 0; i < playerOneUnits.size(); i++) {
-            if (playerOneUnits.at(i).GetSelected() == true) {
+            if (playerOneUnits.at(i).GetSelected() == true && playerOneUnits.at(i).GetActionTaken() == false) {
                 if (InRange(moveCoords, playerOneUnits.at(i).GetTopLeftX(), playerOneUnits.at(i).GetTopLeftY())) {
+                    playerOneUnits.at(i).SetActionTaken(true);
                     return Bullet("bullet.png", playerOneUnits.at(i).GetAllegiance(), playerOneUnits.at(i).GetTopLeftX(), playerOneUnits.at(i).GetTopLeftY(), moveCoords.at(0), moveCoords.at(1));
                 }
                 else {
@@ -106,8 +110,9 @@ Bullet SoldierManager::HandleRightClick(int x, int y, std::vector<int> moveCoord
     
     if (playerTurn == PLAYER_TWO) {
         for (int i = 0; i < playerTwoUnits.size(); i++) {
-            if (playerTwoUnits.at(i).GetSelected() == true) {
+            if (playerTwoUnits.at(i).GetSelected() == true && playerTwoUnits.at(i).GetActionTaken() == false) {
                 if (InRange(moveCoords, playerTwoUnits.at(i).GetTopLeftX(), playerTwoUnits.at(i).GetTopLeftY())) {
+                    playerTwoUnits.at(i).SetActionTaken(true);
                     return Bullet("bullet.png", playerTwoUnits.at(i).GetAllegiance(), playerTwoUnits.at(i).GetTopLeftX(), playerTwoUnits.at(i).GetTopLeftY(), moveCoords.at(0), moveCoords.at(1));
                 }
                 else {
@@ -125,6 +130,15 @@ Bullet SoldierManager::HandleRightClick(int x, int y, std::vector<int> moveCoord
     
 }
 
+void SoldierManager::EndTurn() {
+    for (int i = 0; i < playerOneUnits.size(); i++) {
+        playerOneUnits.at(i).SetActionTaken(false);
+    }
+
+    for (int i = 0; i < playerTwoUnits.size(); i++) {
+        playerTwoUnits.at(i).SetActionTaken(false);
+    }
+}
 
 
 void SoldierManager::Render() {

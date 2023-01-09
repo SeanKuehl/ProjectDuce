@@ -29,6 +29,8 @@ public:
 
 	bool InRange(std::vector<int> moveCoords, int x, int y);
 
+	void EndTurn();
+
 	void Render();
 
 	void Destroy();

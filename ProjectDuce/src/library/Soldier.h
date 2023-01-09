@@ -18,6 +18,7 @@ private:
 	int partialDestX;
 	int partialDestY;
 	bool partialSet = false;
+	bool actionTaken = false;
 
 
 public:
@@ -139,6 +140,14 @@ public:
 
 		al_draw_bitmap(image, xPosition, yPosition, 0);
 
+	}
+
+	void SetActionTaken(bool passedTaken) {
+		actionTaken = passedTaken;
+	}
+
+	bool GetActionTaken() {
+		return actionTaken;
 	}
 
 	int GetAllegiance() {

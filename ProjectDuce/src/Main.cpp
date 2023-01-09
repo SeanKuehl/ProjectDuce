@@ -120,9 +120,10 @@ int main() {
                     done = true;
 
                 if (key[ALLEGRO_KEY_E]) {
-                    //key press gives duplicate events
+                    
                     //end turn for now
                     if (eKeyPressed == false) {
+                        man.EndTurn();
                         eKeyPressed = true;
                         if (playerTurn == PLAYER_ONE) {
                             playerTurn = PLAYER_TWO;

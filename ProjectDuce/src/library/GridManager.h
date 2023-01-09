@@ -24,6 +24,20 @@ public:
 
 	void CreateGrid();
 
+	std::vector<int> GetSoldierCoords(int row, int column);
+
+	std::vector<int> GetSoldierCoordsFromMouse(int x, int y);
+
+	int GetTileWidth();
+
+	int GetTileHieght();
+	
+	int GetXOffset();
+
+	int GetYOffset();
+
+	
+
 	void Render();
 
 	void Destroy();

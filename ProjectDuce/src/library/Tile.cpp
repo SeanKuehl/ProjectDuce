@@ -19,6 +19,32 @@ int Tile::GetTileHieght() {
 }
 
 
+std::vector<int> Tile::GetSoldierCoords() {
+	//get coords for soldier's top left coords
+	//currently soldier image is 40*40 pixels and tile image is 30*30,
+	//so that's where the 5 comes from (10/2 so soldier is centered on tile)
+	int x = xPosition + 5;
+	int y = yPosition + 5;
+	std::vector<int> newVec;
+	newVec.push_back(x);
+	newVec.push_back(y);
+	return newVec;
+}
+
+bool Tile::Contains(int x, int y) {
+	if (x >= xPosition && x <= (xPosition + width)) {
+		if (y >= yPosition && y <= (yPosition + hieght)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	else {
+		return false;
+	}
+}
+
 void Tile::Render() {
 
 	

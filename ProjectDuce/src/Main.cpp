@@ -90,14 +90,16 @@ int main() {
     ALLEGRO_MOUSE_STATE state;
 
     
-
-    
-    SoldierManager man = SoldierManager();
-    man.CreateSoldier(PLAYER_ONE, 0, 0);
-    man.CreateSoldier(PLAYER_TWO, 400, 400);
-
     GridManager gman = GridManager(0, 0, 10);
     gman.CreateGrid();
+    
+    
+    
+    SoldierManager man = SoldierManager(gman.GetTileWidth(), gman.GetTileHieght(), gman.GetXOffset(), gman.GetYOffset());
+    man.CreateSoldier(PLAYER_ONE, gman.GetSoldierCoords(1, 1));
+    man.CreateSoldier(PLAYER_TWO, gman.GetSoldierCoords(10, 10));
+
+    
 
     BulletManager ban = BulletManager();
     
@@ -190,8 +192,9 @@ int main() {
 
                 if (mousePressed == false) {
                     mousePressed = true;
+                    
                     man.SetPlayerTurn(playerTurn);
-                    man.HandleLeftClick(state.x, state.y);
+                    man.HandleLeftClick(state.x, state.y, gman.GetSoldierCoordsFromMouse(state.x, state.y));
                 }
                 else if (mousePressed) {
                     //do nothing, it's a repeat from the same single click event
@@ -229,9 +232,10 @@ int main() {
             if (redraw && al_is_event_queue_empty(queue))
             {
                 al_clear_to_color(al_map_rgb(0, 0, 0));
+                gman.Render();
                 man.Render();
                 ban.Render();
-                gman.Render();
+                
                 al_flip_display();
 
                 redraw = false;
@@ -242,9 +246,10 @@ int main() {
             if (redraw && al_is_event_queue_empty(queue))
             {
                 al_clear_to_color(al_map_rgb(0, 0, 0));
+                gman.Render();
                 man.Render();
                 ban.Render();
-                gman.Render();
+                
                 al_flip_display();
 
                 redraw = false;

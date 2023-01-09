@@ -4,6 +4,7 @@
 #include "AllegroHelper.h"
 #include "Entity.h"
 #include <string>
+#include <vector>
 #include <stdio.h>
 
 class Soldier : public Entity
@@ -14,6 +15,9 @@ private:
 	bool selected = false;	//whether user clicked on this unit or not
 	std::string redSoldierImage = "soldier.png";
 	std::string blueSoldierImage = "EnemySoldier.png";
+	int partialDestX;
+	int partialDestY;
+	bool partialSet = false;
 
 
 public:
@@ -30,6 +34,8 @@ public:
 		yPosition = y;
 		destX = x;
 		destY = y;
+		partialDestX = x;
+		partialDestY = y;
 		hieght = al_get_bitmap_height(image);
 		width = al_get_bitmap_width(image);
 	}
@@ -60,6 +66,78 @@ public:
 		}
 
 		return clickedOn;
+
+	}
+
+
+	void Move(int x, int y, std::vector<int> tileMeasures) {
+		//tileMeasures: tileWidth, tileHieght, xOffset, yOffset
+		destX = x;
+		destY = y;
+
+		
+
+		if ((partialDestX != destX || partialDestY != destY) && partialSet == false) {
+			//calculate new partialdest and move soldier towards it
+			if (partialDestX > destX) {
+				partialDestX = xPosition - tileMeasures.at(0) - tileMeasures.at(2);
+				partialDestY = yPosition;
+			}
+			else if (partialDestX < destX) {
+				partialDestX = xPosition + tileMeasures.at(0) + tileMeasures.at(2);
+				partialDestY = yPosition;
+			}
+
+			if (partialDestY < destY) {
+				partialDestX = xPosition;
+				partialDestY = yPosition + tileMeasures.at(1) + tileMeasures.at(3);
+			}
+			else if (partialDestY > destY) {
+				partialDestX = xPosition;
+				partialDestY = yPosition - tileMeasures.at(1) - tileMeasures.at(3);
+			}
+
+			partialSet = true;
+		}
+
+		if (xPosition > partialDestX) {
+			xPosition -= speed;
+			if (xPosition < partialDestX) {
+				xPosition = partialDestX;
+			}
+		}
+		else if (xPosition < partialDestX) {
+			xPosition += speed;
+			if (xPosition > partialDestX) {
+				xPosition = partialDestX;
+			}
+		}
+
+		if (yPosition > partialDestY) {
+			yPosition -= speed;
+			if (yPosition < partialDestY) {
+				yPosition = partialDestY;
+			}
+		}
+		else if (yPosition < partialDestY) {
+			yPosition += speed;
+			if (yPosition > partialDestY) {
+				yPosition = partialDestY;
+			}
+		}
+
+		if (xPosition == partialDestX && yPosition == partialDestY) {
+			partialSet = false;
+		}
+		
+	}
+
+
+	void Render(std::vector<int> tileMeasures) {
+
+		Move(destX, destY, tileMeasures);
+
+		al_draw_bitmap(image, xPosition, yPosition, 0);
 
 	}
 

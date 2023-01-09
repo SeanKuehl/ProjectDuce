@@ -1,17 +1,20 @@
 #include "SoldierManager.h"
 #include "Bullet.h"
 
-SoldierManager::SoldierManager() {
-
+SoldierManager::SoldierManager(int passedTileWidth, int passedTileHieght, int passedXOffset, int passedYOffset) {
+    tileWidth = passedTileWidth;
+    tileHieght = passedTileHieght;
+    xOffset = passedXOffset;
+    yOffset = passedYOffset;
 }
 
 
-void SoldierManager::CreateSoldier(int passedAllegiance, int x, int y) {
+void SoldierManager::CreateSoldier(int passedAllegiance, std::vector<int> coords) {
 	if (passedAllegiance == PLAYER_ONE) {
-		playerOneUnits.push_back(Soldier(passedAllegiance, x, y));
+		playerOneUnits.push_back(Soldier(passedAllegiance, coords.at(0), coords.at(1)));
 	}
 	else {
-		playerTwoUnits.push_back(Soldier(passedAllegiance, x, y));
+		playerTwoUnits.push_back(Soldier(passedAllegiance, coords.at(0), coords.at(1)));
 	}
 }
 
@@ -19,7 +22,8 @@ void SoldierManager::SetPlayerTurn(int passedTurn) {
     playerTurn = passedTurn;
 }
 
-void SoldierManager::HandleLeftClick(int x, int y) {
+void SoldierManager::HandleLeftClick(int x, int y, std::vector<int> moveCoords) {
+    std::vector<int> tileMeasures = { tileWidth, tileHieght, xOffset, yOffset };
 
     if (playerTurn == PLAYER_ONE) {
         //check if player one units were clicked on
@@ -30,7 +34,7 @@ void SoldierManager::HandleLeftClick(int x, int y) {
             else {
                 if (playerOneUnits.at(i).GetSelected() == true) {
                     //move to that position
-                    playerOneUnits.at(i).Move(x, y);
+                    playerOneUnits.at(i).Move(moveCoords.at(0), moveCoords.at(1), tileMeasures);
                     playerOneUnits.at(i).ToggleSelected();  //deselect
                 }
             }
@@ -48,7 +52,7 @@ void SoldierManager::HandleLeftClick(int x, int y) {
             else {
                 if (playerTwoUnits.at(i).GetSelected() == true) {
                     //move to that position
-                    playerTwoUnits.at(i).Move(x, y);
+                    playerTwoUnits.at(i).Move(moveCoords.at(0), moveCoords.at(1), tileMeasures);
                     playerTwoUnits.at(i).ToggleSelected();  //deselect
                 }
             }
@@ -90,13 +94,15 @@ Bullet SoldierManager::HandleRightClick(int x, int y) {
 
 
 void SoldierManager::Render() {
+    std::vector<int> tileMeasures = { tileWidth, tileHieght, xOffset, yOffset };
+    
 
     for (int i = 0; i < playerOneUnits.size(); i++) {
-        playerOneUnits.at(i).Render();
+        playerOneUnits.at(i).Render(tileMeasures);
     }
 
     for (int i = 0; i < playerTwoUnits.size(); i++) {
-        playerTwoUnits.at(i).Render();
+        playerTwoUnits.at(i).Render(tileMeasures);
     }
 
 }

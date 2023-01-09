@@ -1,6 +1,7 @@
 #pragma once
 #include "AllegroHelper.h"
 #include <string>
+#include <vector>
 
 
 class Tile
@@ -20,6 +21,10 @@ public:
 	int GetTileWidth();
 
 	int GetTileHieght();
+
+	std::vector<int> GetSoldierCoords();
+
+	bool Contains(int x, int y);
 
 	void Render();
 

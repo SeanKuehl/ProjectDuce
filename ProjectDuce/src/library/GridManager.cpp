@@ -27,6 +27,40 @@ void GridManager::CreateGrid() {
 
 }
 
+int GridManager::GetTileWidth() {
+	return tileWidth;
+}
+
+int GridManager::GetTileHieght() {
+	return tileHieght;
+}
+
+int GridManager::GetXOffset() {
+	return xOffset;
+}
+
+int GridManager::GetYOffset() {
+	return yOffset;
+}
+
+std::vector<int> GridManager::GetSoldierCoordsFromMouse(int x, int y) {
+	for (int i = 0; i < tileGrid.size(); i++) {
+		if (tileGrid.at(i).Contains(x, y)) {
+			return tileGrid.at(i).GetSoldierCoords();
+		}
+	
+	}
+	std::vector<int> placeHolder = { -1,-1 };
+	return placeHolder;
+}
+
+std::vector<int> GridManager::GetSoldierCoords(int row, int column) {
+
+	int placement = ((row - 1) * dimension) + (column-1);
+	std::vector<int> toReturn = tileGrid.at(placement).GetSoldierCoords();
+	return toReturn;
+}
+
 
 void GridManager::Render() {
 	for (int i = 0; i < tileGrid.size(); i++) {

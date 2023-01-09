@@ -8,6 +8,7 @@
 #include "Winsock.h"
 #include "library/SoldierManager.h"
 #include "library/BulletManager.h"
+#include "library/GridManager.h"
 #include <string>
 #include <iostream>
 
@@ -94,6 +95,9 @@ int main() {
     SoldierManager man = SoldierManager();
     man.CreateSoldier(PLAYER_ONE, 0, 0);
     man.CreateSoldier(PLAYER_TWO, 400, 400);
+
+    GridManager gman = GridManager(0, 0, 10);
+    gman.CreateGrid();
 
     BulletManager ban = BulletManager();
     
@@ -227,6 +231,7 @@ int main() {
                 al_clear_to_color(al_map_rgb(0, 0, 0));
                 man.Render();
                 ban.Render();
+                gman.Render();
                 al_flip_display();
 
                 redraw = false;
@@ -239,6 +244,7 @@ int main() {
                 al_clear_to_color(al_map_rgb(0, 0, 0));
                 man.Render();
                 ban.Render();
+                gman.Render();
                 al_flip_display();
 
                 redraw = false;
@@ -274,6 +280,7 @@ int main() {
     
     man.Destroy();
     ban.Destroy();
+    gman.Destroy();
     al_destroy_display(display);
     al_destroy_timer(timer);
     al_destroy_event_queue(queue);

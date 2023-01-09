@@ -171,12 +171,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\library\GridManager.cpp" />
     <ClCompile Include="src\library\BulletManager.cpp" />
     <ClCompile Include="src\library\SoldierManager.cpp" />
     <ClCompile Include="src\library\Bullet.cpp" />
     <ClCompile Include="src\library\Soldier.cpp" />
     <ClCompile Include="src\library\Entity.cpp" />
     <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\library\Tile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -190,13 +192,16 @@
     <Image Include="assets\images\bullet.png" />
     <Image Include="assets\images\EnemySoldier.png" />
     <Image Include="assets\images\soldier.png" />
+    <Image Include="assets\images\tile.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\library\GridManager.h" />
     <ClInclude Include="src\library\BulletManager.h" />
     <ClInclude Include="src\library\SoldierManager.h" />
     <ClInclude Include="src\library\Bullet.h" />
     <ClInclude Include="src\library\Soldier.h" />
     <ClInclude Include="src\library\Entity.h" />
+    <ClInclude Include="src\library\Tile.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -153,6 +153,13 @@ public:
 		return (yPosition + (hieght / 2));
 	}
 
+	int GetTopLeftX() {
+		return xPosition;
+	}
+
+	int GetTopLeftY() {
+		return yPosition;
+	}
 
 };
 

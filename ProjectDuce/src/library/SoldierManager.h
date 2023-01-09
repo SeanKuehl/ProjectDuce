@@ -25,7 +25,9 @@ public:
 
 	void HandleLeftClick(int x, int y, std::vector<int> moveCoords);
 
-	Bullet HandleRightClick(int x, int y);
+	Bullet HandleRightClick(int x, int y, std::vector<int> moveCoords);
+
+	bool InRange(std::vector<int> moveCoords, int x, int y);
 
 	void Render();
 

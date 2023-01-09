@@ -101,7 +101,7 @@ int main() {
 
     
 
-    BulletManager ban = BulletManager();
+    BulletManager ban = BulletManager(gman.GetTileWidth(), gman.GetTileHieght(), gman.GetXOffset(), gman.GetYOffset());
     
     int playerTurn = PLAYER_ONE;
 
@@ -201,12 +201,12 @@ int main() {
                 }
             }
             else if (state.buttons & 2) {
-                printf("mouse 2 is down\n");    //trackpad not working, may need mouse
+               
 
                 if (mousePressed == false) {
                     mousePressed = true;
                     man.SetPlayerTurn(playerTurn);
-                    Bullet newBullet = man.HandleRightClick(state.x, state.y);
+                    Bullet newBullet = man.HandleRightClick(state.x, state.y, gman.GetSoldierCoordsFromMouse(state.x, state.y));
                     if (newBullet.GetIsNull()) {
                         //no new bullet was returned
                     }

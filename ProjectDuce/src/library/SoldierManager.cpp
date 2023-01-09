@@ -64,14 +64,42 @@ void SoldierManager::HandleLeftClick(int x, int y, std::vector<int> moveCoords) 
     
 }
 
+bool SoldierManager::InRange(std::vector<int> moveCoords, int x, int y) {
+    int tileSizeX = tileWidth + xOffset;
+    int tileSizeY = tileHieght + yOffset;
+    int range = 3;
 
-Bullet SoldierManager::HandleRightClick(int x, int y) {
+    int xDist = abs(x - moveCoords.at(0));
+    int yDist = abs(y - moveCoords.at(1));
+
+    if (xDist > (range * tileSizeX)) {
+        //out of range
+        return false;
+    }
+
+    if (yDist > (range * tileSizeY)) {
+        //out of range
+        return false;
+    }
+
+    return true;
+
+}
+
+
+Bullet SoldierManager::HandleRightClick(int x, int y, std::vector<int> moveCoords) {
 
     if (playerTurn == PLAYER_ONE) {
         for (int i = 0; i < playerOneUnits.size(); i++) {
             if (playerOneUnits.at(i).GetSelected() == true) {
-
-                return Bullet("bullet.png", playerOneUnits.at(i).GetAllegiance(), playerOneUnits.at(i).GetCenterX(), playerOneUnits.at(i).GetCenterY(), x, y);
+                if (InRange(moveCoords, playerOneUnits.at(i).GetTopLeftX(), playerOneUnits.at(i).GetTopLeftY())) {
+                    return Bullet("bullet.png", playerOneUnits.at(i).GetAllegiance(), playerOneUnits.at(i).GetTopLeftX(), playerOneUnits.at(i).GetTopLeftY(), moveCoords.at(0), moveCoords.at(1));
+                }
+                else {
+                    //don't shoot
+                    return Bullet();
+                }
+                
             }
         }
     }
@@ -79,7 +107,13 @@ Bullet SoldierManager::HandleRightClick(int x, int y) {
     if (playerTurn == PLAYER_TWO) {
         for (int i = 0; i < playerTwoUnits.size(); i++) {
             if (playerTwoUnits.at(i).GetSelected() == true) {
-                return Bullet("bullet.png", playerTwoUnits.at(i).GetAllegiance(), playerTwoUnits.at(i).GetCenterX(), playerTwoUnits.at(i).GetCenterY(), x, y);
+                if (InRange(moveCoords, playerTwoUnits.at(i).GetTopLeftX(), playerTwoUnits.at(i).GetTopLeftY())) {
+                    return Bullet("bullet.png", playerTwoUnits.at(i).GetAllegiance(), playerTwoUnits.at(i).GetTopLeftX(), playerTwoUnits.at(i).GetTopLeftY(), moveCoords.at(0), moveCoords.at(1));
+                }
+                else {
+                    return Bullet();
+                }
+                
             }
         }
     }

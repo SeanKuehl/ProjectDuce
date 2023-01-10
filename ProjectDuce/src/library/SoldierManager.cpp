@@ -41,7 +41,7 @@ void SoldierManager::HandleLeftClick(int x, int y, std::vector<int> moveCoords) 
             }
         }
     }
-    
+
 
 
     if (playerTurn == PLAYER_TWO) {
@@ -53,18 +53,18 @@ void SoldierManager::HandleLeftClick(int x, int y, std::vector<int> moveCoords) 
             else {
                 if (playerTwoUnits.at(i).GetSelected() == true && playerTwoUnits.at(i).GetActionTaken() == false) {
                     //move to that position
-                    
+
                     playerTwoUnits.at(i).Move(moveCoords.at(0), moveCoords.at(1), tileMeasures);
                     playerTwoUnits.at(i).ToggleSelected();  //deselect
-                    playerOneUnits.at(i).SetActionTaken(true);
+                    playerTwoUnits.at(i).SetActionTaken(true);
                 }
             }
         }
     }
-    
 
 
-    
+
+
 }
 
 bool SoldierManager::InRange(std::vector<int> moveCoords, int x, int y) {
@@ -103,11 +103,11 @@ Bullet SoldierManager::HandleRightClick(int x, int y, std::vector<int> moveCoord
                     //don't shoot
                     return Bullet();
                 }
-                
+
             }
         }
     }
-    
+
     if (playerTurn == PLAYER_TWO) {
         for (int i = 0; i < playerTwoUnits.size(); i++) {
             if (playerTwoUnits.at(i).GetSelected() == true && playerTwoUnits.at(i).GetActionTaken() == false) {
@@ -118,16 +118,40 @@ Bullet SoldierManager::HandleRightClick(int x, int y, std::vector<int> moveCoord
                 else {
                     return Bullet();
                 }
-                
+
             }
         }
     }
-    
+
 
     return Bullet();
 
 
-    
+
+}
+
+
+
+std::vector<int> SoldierManager::GetSoldierGridCoords(std::vector<int> gridCoords, int dimension) {
+    //check if grid coords at -1, -1 as this is the null case
+    std::vector<int> newCoords = { -1,-1 };
+    if (gridCoords.at(0) == -1) {
+        //it's the null case, don't do anything
+    }
+    else {
+        //try to create a soldier one column to the right, or one column to the left of the coords
+        if ((gridCoords.at(1) - 1) > 0) {
+            //create soldier there
+            
+            newCoords = { gridCoords.at(0), gridCoords.at(1) - 1 };
+        }
+        else if ((gridCoords.at(1) + 1) < dimension){
+            //create soldier there
+            newCoords = { gridCoords.at(0), gridCoords.at(1) + 1 };
+        }
+        
+    }
+    return newCoords;
 }
 
 void SoldierManager::EndTurn() {

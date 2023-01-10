@@ -36,7 +36,7 @@ public:
 
 	int GetYOffset();
 
-	
+	int GetDimension();
 
 	void Render();
 

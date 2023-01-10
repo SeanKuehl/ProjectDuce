@@ -42,6 +42,9 @@
     <ClCompile Include="src\library\Building.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\library\BuildingManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -89,6 +92,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\library\Building.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\library\BuildingManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

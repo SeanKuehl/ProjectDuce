@@ -21,6 +21,8 @@ public:
 
 	void CreateSoldier(int passedAllegiance, std::vector<int> coords);
 
+	std::vector<int> GetSoldierGridCoords(std::vector<int> gridCoords, int dimension);
+
 	void SetPlayerTurn(int passedTurn);
 
 	void HandleLeftClick(int x, int y, std::vector<int> moveCoords);

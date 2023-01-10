@@ -61,6 +61,10 @@ std::vector<int> GridManager::GetSoldierCoords(int row, int column) {
 	return toReturn;
 }
 
+int GridManager::GetDimension() {
+	return dimension;
+}
+
 
 void GridManager::Render() {
 	for (int i = 0; i < tileGrid.size(); i++) {

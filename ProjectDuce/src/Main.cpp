@@ -9,7 +9,7 @@
 #include "library/SoldierManager.h"
 #include "library/BulletManager.h"
 #include "library/GridManager.h"
-#include "library/Building.h"
+#include "library/BuildingManager.h"
 #include <string>
 #include <iostream>
 
@@ -94,13 +94,15 @@ int main() {
     GridManager gman = GridManager(0, 0, 10);
     gman.CreateGrid();
     
-    
+    BuildingManager buildman = BuildingManager();
+    buildman.CreateBase(gman.GetSoldierCoords(5, 1), PLAYER_ONE, 5, 1);
+    buildman.CreateBase(gman.GetSoldierCoords(5, 10), PLAYER_TWO, 5, 10);
     
     SoldierManager man = SoldierManager(gman.GetTileWidth(), gman.GetTileHieght(), gman.GetXOffset(), gman.GetYOffset());
     man.CreateSoldier(PLAYER_ONE, gman.GetSoldierCoords(1, 1));
     man.CreateSoldier(PLAYER_TWO, gman.GetSoldierCoords(10, 10));
 
-    Building building = Building("assets/images/redBase.png", gman.GetSoldierCoords(5, 1));
+    
 
     BulletManager ban = BulletManager(gman.GetTileWidth(), gman.GetTileHieght(), gman.GetXOffset(), gman.GetYOffset());
     
@@ -197,6 +199,21 @@ int main() {
                     
                     man.SetPlayerTurn(playerTurn);
                     man.HandleLeftClick(state.x, state.y, gman.GetSoldierCoordsFromMouse(state.x, state.y));
+
+                    buildman.SetPlayerTurn(playerTurn);
+                    std::vector<int> coords = buildman.HandleLeftClick(state.x, state.y);
+                    
+                    if (coords.at(0) == -1) {
+                        //null case, don't create soldier
+                    }
+                    else {
+                        coords = man.GetSoldierGridCoords(coords, gman.GetDimension());
+                        printf("%d, %d\n", coords.at(0), coords.at(1));
+                        man.CreateSoldier(playerTurn, gman.GetSoldierCoords(coords.at(0), coords.at(1)));
+                    }
+
+                    
+                    
                 }
                 else if (mousePressed) {
                     //do nothing, it's a repeat from the same single click event
@@ -237,7 +254,7 @@ int main() {
                 gman.Render();
                 man.Render();
                 ban.Render();
-                building.Render();
+                buildman.Render();
                 
                 al_flip_display();
 
@@ -289,7 +306,7 @@ int main() {
     man.Destroy();
     ban.Destroy();
     gman.Destroy();
-    building.Destroy();
+    buildman.Destroy();
     al_destroy_display(display);
     al_destroy_timer(timer);
     al_destroy_event_queue(queue);

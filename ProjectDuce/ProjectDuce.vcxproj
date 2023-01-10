@@ -171,6 +171,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\library\Building.cpp" />
     <ClCompile Include="src\library\GridManager.cpp" />
     <ClCompile Include="src\library\BulletManager.cpp" />
     <ClCompile Include="src\library\SoldierManager.cpp" />
@@ -189,12 +190,15 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Image Include="assets\images\blueBase.png" />
     <Image Include="assets\images\bullet.png" />
     <Image Include="assets\images\EnemySoldier.png" />
+    <Image Include="assets\images\redBase.png" />
     <Image Include="assets\images\soldier.png" />
     <Image Include="assets\images\tile.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\library\Building.h" />
     <ClInclude Include="src\library\GridManager.h" />
     <ClInclude Include="src\library\BulletManager.h" />
     <ClInclude Include="src\library\SoldierManager.h" />

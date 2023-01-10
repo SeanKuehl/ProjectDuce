@@ -9,6 +9,7 @@
 #include "library/SoldierManager.h"
 #include "library/BulletManager.h"
 #include "library/GridManager.h"
+#include "library/Building.h"
 #include <string>
 #include <iostream>
 
@@ -99,7 +100,7 @@ int main() {
     man.CreateSoldier(PLAYER_ONE, gman.GetSoldierCoords(1, 1));
     man.CreateSoldier(PLAYER_TWO, gman.GetSoldierCoords(10, 10));
 
-    
+    Building building = Building("assets/images/redBase.png", gman.GetSoldierCoords(5, 1));
 
     BulletManager ban = BulletManager(gman.GetTileWidth(), gman.GetTileHieght(), gman.GetXOffset(), gman.GetYOffset());
     
@@ -236,6 +237,7 @@ int main() {
                 gman.Render();
                 man.Render();
                 ban.Render();
+                building.Render();
                 
                 al_flip_display();
 
@@ -287,6 +289,7 @@ int main() {
     man.Destroy();
     ban.Destroy();
     gman.Destroy();
+    building.Destroy();
     al_destroy_display(display);
     al_destroy_timer(timer);
     al_destroy_event_queue(queue);

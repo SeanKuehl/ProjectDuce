@@ -171,6 +171,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\library\NetworkManager.cpp" />
     <ClCompile Include="src\library\BuildingManager.cpp" />
     <ClCompile Include="src\library\Building.cpp" />
     <ClCompile Include="src\library\GridManager.cpp" />
@@ -199,6 +200,7 @@
     <Image Include="assets\images\tile.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\library\NetworkManager.h" />
     <ClInclude Include="src\library\BuildingManager.h" />
     <ClInclude Include="src\library\Building.h" />
     <ClInclude Include="src\library\GridManager.h" />

@@ -22,8 +22,10 @@ void SoldierManager::SetPlayerTurn(int passedTurn) {
     playerTurn = passedTurn;
 }
 
-void SoldierManager::HandleLeftClick(int x, int y, std::vector<int> moveCoords) {
+std::vector<int> SoldierManager::HandleLeftClick(int x, int y, std::vector<int> moveCoords) {
     std::vector<int> tileMeasures = { tileWidth, tileHieght, xOffset, yOffset };
+    std::vector<int> moveInformation = { -1 };
+
 
     if (playerTurn == PLAYER_ONE) {
         //check if player one units were clicked on
@@ -37,6 +39,7 @@ void SoldierManager::HandleLeftClick(int x, int y, std::vector<int> moveCoords) 
                     playerOneUnits.at(i).Move(moveCoords.at(0), moveCoords.at(1), tileMeasures);
                     playerOneUnits.at(i).ToggleSelected();  //deselect
                     playerOneUnits.at(i).SetActionTaken(true);
+                    moveInformation = { i, moveCoords.at(0), moveCoords.at(1) };
                 }
             }
         }
@@ -57,13 +60,26 @@ void SoldierManager::HandleLeftClick(int x, int y, std::vector<int> moveCoords) 
                     playerTwoUnits.at(i).Move(moveCoords.at(0), moveCoords.at(1), tileMeasures);
                     playerTwoUnits.at(i).ToggleSelected();  //deselect
                     playerTwoUnits.at(i).SetActionTaken(true);
+                    moveInformation = { i, moveCoords.at(0), moveCoords.at(1) };
                 }
             }
         }
     }
 
+    return moveInformation;
 
 
+}
+
+void SoldierManager::NetworkMove(int index, std::vector<int> moveCoords) {
+    std::vector<int> tileMeasures = { tileWidth, tileHieght, xOffset, yOffset };
+
+    if (playerTurn == PLAYER_ONE) {
+        playerOneUnits.at(index).Move(moveCoords.at(0), moveCoords.at(1), tileMeasures);
+    }
+    else if (playerTurn == PLAYER_TWO) {
+        playerTwoUnits.at(index).Move(moveCoords.at(0), moveCoords.at(1), tileMeasures);
+    }
 
 }
 
@@ -187,4 +203,8 @@ void SoldierManager::Destroy() {
     for (int i = 0; i < playerTwoUnits.size(); i++) {
         playerTwoUnits.at(i).Destroy();
     }
+}
+
+int SoldierManager::GetNumSol() {
+    return playerOneUnits.size();
 }

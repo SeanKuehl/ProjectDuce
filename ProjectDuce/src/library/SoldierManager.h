@@ -25,7 +25,11 @@ public:
 
 	void SetPlayerTurn(int passedTurn);
 
-	void HandleLeftClick(int x, int y, std::vector<int> moveCoords);
+	int GetNumSol();
+
+	void NetworkMove(int index, std::vector<int> moveCoords);
+
+	std::vector<int> HandleLeftClick(int x, int y, std::vector<int> moveCoords);
 
 	Bullet HandleRightClick(int x, int y, std::vector<int> moveCoords);
 

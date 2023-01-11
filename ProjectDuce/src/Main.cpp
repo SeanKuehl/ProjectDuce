@@ -10,6 +10,7 @@
 #include "library/BulletManager.h"
 #include "library/GridManager.h"
 #include "library/BuildingManager.h"
+#include "library/NetworkManager.h"
 #include <string>
 #include <iostream>
 
@@ -90,6 +91,7 @@ int main() {
 
     ALLEGRO_MOUSE_STATE state;
 
+    NetworkManager nman = NetworkManager();
     
     GridManager gman = GridManager(0, 0, 10);
     gman.CreateGrid();
@@ -198,7 +200,20 @@ int main() {
                     mousePressed = true;
                     
                     man.SetPlayerTurn(playerTurn);
-                    man.HandleLeftClick(state.x, state.y, gman.GetSoldierCoordsFromMouse(state.x, state.y));
+                    std::vector<int> moveInfo = man.HandleLeftClick(state.x, state.y, gman.GetSoldierCoordsFromMouse(state.x, state.y));
+
+                    if (moveInfo.at(0) != -1) {
+                        if (clientOrServer == 2) {
+                            //M for move soldier, then which soldier it is in the list(i),  then coord x, then coord y
+                            std::string sendMessage = "MX" + std::to_string(moveInfo.at(0)) + "X" + std::to_string(moveInfo.at(1)) + "X" + std::to_string(moveInfo.at(2)) + "X";
+                            SendString(client, sendMessage);
+                        }
+                        else {
+                            //M for move soldier, then which soldier it is in the list(i),  then coord x, then coord y
+                            std::string sendMessage = "MX" + std::to_string(moveInfo.at(0)) + "X" + std::to_string(moveInfo.at(1)) + "X" + std::to_string(moveInfo.at(2)) + "X";
+                            SendString(s, sendMessage);
+                        }
+                    }
 
                     buildman.SetPlayerTurn(playerTurn);
                     std::vector<int> coords = buildman.HandleLeftClick(state.x, state.y);
@@ -210,6 +225,18 @@ int main() {
                         coords = man.GetSoldierGridCoords(coords, gman.GetDimension());
                         printf("%d, %d\n", coords.at(0), coords.at(1));
                         man.CreateSoldier(playerTurn, gman.GetSoldierCoords(coords.at(0), coords.at(1)));
+
+                        if (clientOrServer == 2) {
+                            //C for create soldier, next is allegiance, then coord x, then coord y
+                            std::string sendMessage = "CX" + std::to_string(playerTurn) + "X" + std::to_string(coords.at(0)) + "X" + std::to_string(coords.at(1)) + "X";
+                            SendString(client, sendMessage);
+                        }
+                        else {
+                            //C for create soldier, next is allegiance, then coord x, then coord y
+                            std::string sendMessage = "CX" + std::to_string(playerTurn) + "X" + std::to_string(coords.at(0)) + "X" + std::to_string(coords.at(1)) + "X";
+                            SendString(s, sendMessage);
+                        }
+
                     }
 
                     
@@ -277,11 +304,33 @@ int main() {
 
             //wait for message from other
             std::string message = "";
+            
             if (clientOrServer == 2) {
-                message = ReceiveString(client); //this should be blocking
+                while (message != "end turn pressed") {
+                    message = ReceiveString(client); //this should be blocking
+                    if (message != "ERROR" && message != "end turn pressed") {
+                        std::cout << message << std::endl;
+                        std::cout << man.GetNumSol() << std::endl;
+                        man.SetPlayerTurn(playerTurn);
+                        nman.InterperetNetworkMessage(message, man, gman);
+                        std::cout << man.GetNumSol() << std::endl;
+                    }
+                }
+                
             }
             else {
-                message = ReceiveString(s); //this should be blocking
+                while (message != "end turn pressed") {
+                    message = ReceiveString(s); //this should be blocking
+                    if (message != "ERROR" && message != "end turn pressed") {
+                        std::cout << message << std::endl;
+                        std::cout << man.GetNumSol() << std::endl;
+                        man.SetPlayerTurn(playerTurn);
+                        nman.InterperetNetworkMessage(message, man, gman);
+                        std::cout << man.GetNumSol() << std::endl;
+                    }
+                }
+
+                
             }
             
             std::cout << message << std::endl;

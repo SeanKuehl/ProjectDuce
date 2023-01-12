@@ -24,6 +24,10 @@ public:
 
 	void CreateGrid();
 
+	std::vector<int> GetGridCoords(int x, int y);
+
+	std::vector<int> GetTileCoordsFromGridCoords(int x, int y);
+
 	std::vector<int> GetSoldierCoords(int row, int column);
 
 	std::vector<int> GetSoldierCoordsFromMouse(int x, int y);

@@ -20,7 +20,7 @@ public:
 
 	void AddBullet(Bullet b);
 
-	void Render();
+	std::vector<int> Render();
 
 	void Destroy();
 

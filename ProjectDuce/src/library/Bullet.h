@@ -19,6 +19,8 @@ public:
 
 	bool GetIsNull();
 
+	std::vector<int> GetXAndYPosition();
+
 	bool InRange(int x, int y, std::vector<int> tileMeasures);
 
 	void Render(std::vector<int> tileMeasures);

@@ -19,6 +19,7 @@ private:
 	int partialDestY;
 	bool partialSet = false;
 	bool actionTaken = false;
+	int health = 3;
 
 
 public:
@@ -47,6 +48,16 @@ public:
 
 	bool GetSelected() {
 		return selected;
+	}
+
+	bool TakeHit() {
+		health -= 1;
+		if (health == 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	bool ClickedOn(int mouseX, int mouseY) {

@@ -42,6 +42,26 @@ public:
 			std::vector<int> coords = { std::stoi(messageTokens.at(2)), std::stoi(messageTokens.at(3)) };
 			man.NetworkMove(index, coords);
 		}
+		else if (messageTokens.at(0) == "H") {
+			//someone fired a bullet that hit a square
+			//check if it hit a soldier or a base
+			int allegiance = std::stoi(messageTokens.at(1));
+			std::vector<int> coords = { std::stoi(messageTokens.at(2)), std::stoi(messageTokens.at(3)) };
+			std::vector<int> xyCoords = gman.GetTileCoordsFromGridCoords(coords.at(0), coords.at(1));
+			std::vector<int> hitEvent = man.GetSoldierHit(allegiance, xyCoords);
+
+			//Differentiate between hit and kill!!!!
+
+			if (hitEvent.at(0) == -1) {
+				//no hit, check buildings
+				//building manager func
+			}
+			else {
+				//send a 
+			}
+
+			
+		}
 
 	}
 	

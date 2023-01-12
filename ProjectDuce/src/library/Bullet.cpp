@@ -28,6 +28,11 @@ void Bullet::Render(std::vector<int> tileMeasures) {
 
 }
 
+std::vector<int> Bullet::GetXAndYPosition() {
+	std::vector<int> coords = { xPosition, yPosition };
+	return coords;
+}
+
 bool Bullet::InRange(int x, int y, std::vector<int> tileMeasures) {
 	//do the range check
 	int tileXSize = tileMeasures.at(0) + tileMeasures.at(2);

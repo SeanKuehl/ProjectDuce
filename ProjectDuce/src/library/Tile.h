@@ -13,14 +13,20 @@ protected:
 	int yPosition;
 	int width;
 	int hieght;
+	int gridX;
+	int gridY;
 
 
 public:
-	Tile(int x, int y);
+	Tile(int x, int y, int gridX, int gridY);
 
 	int GetTileWidth();
 
 	int GetTileHieght();
+
+	std::vector<int> GetXYCoords();
+
+	std::vector<int> GetGridCoords();
 
 	std::vector<int> GetSoldierCoords();
 

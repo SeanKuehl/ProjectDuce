@@ -1,14 +1,22 @@
 #include "Tile.h"
 
 
-Tile::Tile(int x, int y) {
+Tile::Tile(int x, int y, int passedGridX, int passedGridY) {
 
 	image = CreateImage(imageName);	//image name includes file extension
 	xPosition = x;
 	yPosition = y;
+	gridX = passedGridX;
+	gridY = passedGridY;
 	hieght = al_get_bitmap_height(image);
 	width = al_get_bitmap_width(image);
 }
+
+std::vector<int> Tile::GetGridCoords() {
+	std::vector<int> coords = { gridX, gridY };
+	return coords;
+}
+
 
 int Tile::GetTileWidth() {
 	return width;
@@ -43,6 +51,11 @@ bool Tile::Contains(int x, int y) {
 	else {
 		return false;
 	}
+}
+
+std::vector<int> Tile::GetXYCoords() {
+	std::vector<int> coords = { xPosition, yPosition, width, hieght };
+	return coords;
 }
 
 void Tile::Render() {

@@ -17,17 +17,21 @@ void BulletManager::AddBullet(Bullet b) {
 	activeBulletList.push_back(b);
 }
 
-void BulletManager::Render() {
+std::vector<int> BulletManager::Render() {
 	std::vector<int> toPass = { tileWidth, tileHieght, xOffset, yOffset };
+	std::vector<int> toReturn = { -1, -1 };
 
 	for (int i = 0; i < activeBulletList.size(); i++) {
 		activeBulletList.at(i).Render(toPass);
 		if (activeBulletList.at(i).ReachedDestination() == true) {
-			/*Bullet temp = activeBulletList.at(i);	
+			//it hit a square, get it's x and y so we can figure out where
+			toReturn = activeBulletList.at(i).GetXAndYPosition();
+			Bullet temp = activeBulletList.at(i);	
 			activeBulletList.erase(activeBulletList.begin() + i);
-			temp.Destroy();*/
+			temp.Destroy();
 		}
 	}
+	return toReturn;
 }
 
 void BulletManager::Destroy() {

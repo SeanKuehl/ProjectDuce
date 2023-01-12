@@ -280,12 +280,36 @@ int main() {
                 al_clear_to_color(al_map_rgb(0, 0, 0));
                 gman.Render();
                 man.Render();
-                ban.Render();
+                std::vector<int> coords = ban.Render();
                 buildman.Render();
                 
                 al_flip_display();
 
                 redraw = false;
+
+
+                if (coords.at(0) == -1) {
+                    //null case, ignore
+                }
+                else {
+                    //figure out what square the bullet hit and hit any
+                    //enemy soldiers there
+                    coords = gman.GetGridCoords(coords.at(0), coords.at(1));
+
+                    if (clientOrServer == 2) {
+                        //H is for hit, as a bullet struck a square, turn is to tell who it should hurt(not current turn player), then it's grid x coord, then it's grid y coord
+                        std::string sendMessage = "HX" + std::to_string(playerTurn) + "X" + std::to_string(coords.at(0)) + "X" + std::to_string(coords.at(1)) + "X";
+                        SendString(client, sendMessage);
+                    }
+                    else {
+                        //H is for hit, as a bullet struck a square, turn is to tell who it should hurt(not current turn player), then it's grid x coord, then it's grid y coord
+                        std::string sendMessage = "HX" + std::to_string(playerTurn) + "X" + std::to_string(coords.at(0)) + "X" + std::to_string(coords.at(1)) + "X";
+                        SendString(s, sendMessage);
+                    }
+
+                }
+
+
             }
 
         }
@@ -310,10 +334,10 @@ int main() {
                     message = ReceiveString(client); //this should be blocking
                     if (message != "ERROR" && message != "end turn pressed") {
                         std::cout << message << std::endl;
-                        std::cout << man.GetNumSol() << std::endl;
+                        
                         man.SetPlayerTurn(playerTurn);
                         nman.InterperetNetworkMessage(message, man, gman);
-                        std::cout << man.GetNumSol() << std::endl;
+                        
                     }
                 }
                 
@@ -323,10 +347,10 @@ int main() {
                     message = ReceiveString(s); //this should be blocking
                     if (message != "ERROR" && message != "end turn pressed") {
                         std::cout << message << std::endl;
-                        std::cout << man.GetNumSol() << std::endl;
+                        
                         man.SetPlayerTurn(playerTurn);
                         nman.InterperetNetworkMessage(message, man, gman);
-                        std::cout << man.GetNumSol() << std::endl;
+                        
                     }
                 }
 

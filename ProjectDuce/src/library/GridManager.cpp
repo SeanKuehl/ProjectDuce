@@ -7,7 +7,7 @@ GridManager::GridManager(int startX, int startY, int squareDimension) {
 	gridStartX = startX;
 	gridStartY = startY;
 	dimension = squareDimension;
-	Tile temp = Tile(0, 0);
+	Tile temp = Tile(0, 0, 0, 0);
 	tileWidth = temp.GetTileWidth();
 	tileHieght = temp.GetTileHieght();
 }
@@ -18,7 +18,7 @@ void GridManager::CreateGrid() {
 	int activeY = gridStartY;
 	for (int i = 0; i < dimension; i++) {
 		for (int k = 0; k < dimension; k++) {
-			tileGrid.push_back(Tile(activeX, activeY));
+			tileGrid.push_back(Tile(activeX, activeY, i, k));
 			activeX += tileWidth + xOffset;
 		}
 		activeY += tileHieght + yOffset;
@@ -58,6 +58,23 @@ std::vector<int> GridManager::GetSoldierCoords(int row, int column) {
 
 	int placement = ((row - 1) * dimension) + (column-1);
 	std::vector<int> toReturn = tileGrid.at(placement).GetSoldierCoords();
+	return toReturn;
+}
+
+std::vector<int> GridManager::GetGridCoords(int x, int y) {
+	std::vector<int> coords;
+	for (int i = 0; i < tileGrid.size(); i++) {
+		if (tileGrid.at(i).Contains(x, y)) {
+			//get it's grid pos
+			coords = tileGrid.at(i).GetGridCoords();
+		}
+	}
+	return coords;
+}
+
+std::vector<int> GridManager::GetTileCoordsFromGridCoords(int x, int y) {
+	int placement = ((x - 1) * dimension) + (y - 1);
+	std::vector<int> toReturn = tileGrid.at(placement).GetXYCoords();
 	return toReturn;
 }
 

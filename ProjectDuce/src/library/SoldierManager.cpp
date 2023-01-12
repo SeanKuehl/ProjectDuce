@@ -149,10 +149,12 @@ Bullet SoldierManager::HandleRightClick(int x, int y, std::vector<int> moveCoord
 std::vector<int> SoldierManager::GetSoldierHit(int allegiance, std::vector<int> tileCoords) {
     //allegiance is of the person firing the shot, so only check the enemies of that allegiance for hits
     //tile coords is xPos, yPos, width, hieght of tile
-    std::vector<int> toReturn = { -1, -1 };
+    std::vector<int> toReturn = { -2, -2 }; //this is the no hit case
     if (allegiance == PLAYER_ONE) {
         //check player two troops
+        
         for (int i = 0; i < playerTwoUnits.size(); i++) {
+            
             int x = playerTwoUnits.at(i).GetTopLeftX();
             int y = playerTwoUnits.at(i).GetTopLeftY();
 
@@ -160,7 +162,7 @@ std::vector<int> SoldierManager::GetSoldierHit(int allegiance, std::vector<int> 
                 if (y > tileCoords.at(1) && y < (tileCoords.at(1) + tileCoords.at(3))) {
                     //this soldier was hit, decrease it's health and kill it if needed
                     bool dead = playerTwoUnits.at(i).TakeHit();
-
+                    toReturn = { -1, -1 };  //this is the hit case
                     if (dead) {
                         //remove soldier from play and send event to other player to synchronize
                         //a "K", kill event needing allegiance of soldier to kill, i of their spot in soldier list
@@ -179,15 +181,20 @@ std::vector<int> SoldierManager::GetSoldierHit(int allegiance, std::vector<int> 
     }
     else if (allegiance == PLAYER_TWO) {
         //check player one troops
+        
         for (int i = 0; i < playerOneUnits.size(); i++) {
+            
             int x = playerOneUnits.at(i).GetTopLeftX();
             int y = playerOneUnits.at(i).GetTopLeftY();
+           
 
             if (x > tileCoords.at(0) && x < (tileCoords.at(0) + tileCoords.at(2))) {
                 if (y > tileCoords.at(1) && y < (tileCoords.at(1) + tileCoords.at(3))) {
+                    
                     //this soldier was hit, decrease it's health and kill it if needed
                     bool dead = playerOneUnits.at(i).TakeHit();
-
+                    
+                    toReturn = { -1, -1 };  //this is the hit case
                     if (dead) {
                         //remove soldier from play and send event to other player to synchronize
                         //a "K", kill event needing allegiance of soldier to kill, i of their spot in soldier list
@@ -195,6 +202,7 @@ std::vector<int> SoldierManager::GetSoldierHit(int allegiance, std::vector<int> 
                         Soldier temp = playerOneUnits.at(i);
                         playerOneUnits.erase(playerOneUnits.begin() + i);
                         temp.Destroy();
+                        
                     }
 
                 }
@@ -204,6 +212,22 @@ std::vector<int> SoldierManager::GetSoldierHit(int allegiance, std::vector<int> 
     }
 
     return toReturn;
+
+}
+
+void SoldierManager::RemoveSoldier(int allegiance, int index) {
+    printf("got here, %d, %d\n", playerOneUnits.size(), playerTwoUnits.size());
+    if (allegiance == PLAYER_ONE) {
+        
+        Soldier temp = playerOneUnits.at(index);
+        playerOneUnits.erase(playerOneUnits.begin() + index);
+        temp.Destroy();
+    }
+    else if (allegiance == PLAYER_TWO) {
+        Soldier temp = playerTwoUnits.at(index);
+        playerTwoUnits.erase(playerTwoUnits.begin() + index);
+        temp.Destroy();
+    }
 
 }
 

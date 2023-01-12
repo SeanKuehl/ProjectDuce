@@ -14,6 +14,7 @@ private:
 	int allegiance;
 	int gridX;
 	int gridY;
+	int health = 3;
 	ALLEGRO_BITMAP* image;
 
 
@@ -23,6 +24,8 @@ public:
 	bool ClickedOn(int mouseX, int mouseY);
 
 	int GetAllegiance();
+
+	bool TakeHit();
 
 	std::vector<int> GetGridCoords();
 

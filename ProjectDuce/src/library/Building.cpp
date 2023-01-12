@@ -17,6 +17,17 @@ Building::Building(std::string imageName, std::vector<int> coords, int passedAll
 	allegiance = passedAllegiance;
 }
 
+bool Building::TakeHit() {
+	health -= 1;
+	printf("%d\n", health);
+	if (health == 0) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
 std::vector<int> Building::GetGridCoords() {
 	std::vector<int> myCoords = { gridX, gridY };
 	return myCoords;

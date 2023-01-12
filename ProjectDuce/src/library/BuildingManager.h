@@ -27,7 +27,7 @@ public:
 
 	std::vector<int> HandleLeftClick(int x, int y);
 
-	
+	bool GetBuildingHit(int allegiance, int gridX, int gridY);
 
 	void Render();
 

@@ -25,6 +25,8 @@ public:
 
 	void SetPlayerTurn(int passedTurn);
 
+	void RemoveSoldier(int allegiance, int index);
+
 	std::vector<int> GetSoldierHit(int allegiance, std::vector<int> tileCoords);
 
 	void NetworkMove(int index, std::vector<int> moveCoords);

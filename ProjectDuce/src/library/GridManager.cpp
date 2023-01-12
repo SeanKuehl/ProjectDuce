@@ -73,7 +73,8 @@ std::vector<int> GridManager::GetGridCoords(int x, int y) {
 }
 
 std::vector<int> GridManager::GetTileCoordsFromGridCoords(int x, int y) {
-	int placement = ((x - 1) * dimension) + (y - 1);
+	//x and y are already adjusted to work with the grid, so no need for -1
+	int placement = ((x) * dimension) + (y);
 	std::vector<int> toReturn = tileGrid.at(placement).GetXYCoords();
 	return toReturn;
 }

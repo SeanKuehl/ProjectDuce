@@ -294,8 +294,14 @@ int main() {
                 else {
                     //figure out what square the bullet hit and hit any
                     //enemy soldiers there
+                    //do hit locally
                     coords = gman.GetGridCoords(coords.at(0), coords.at(1));
+                    std::vector<int> xyCoords = gman.GetTileCoordsFromGridCoords(coords.at(0), coords.at(1));
+        
+                    std::vector<int> hitEvent = man.GetSoldierHit(playerTurn, xyCoords);
 
+
+                    //do hit across network
                     if (clientOrServer == 2) {
                         //H is for hit, as a bullet struck a square, turn is to tell who it should hurt(not current turn player), then it's grid x coord, then it's grid y coord
                         std::string sendMessage = "HX" + std::to_string(playerTurn) + "X" + std::to_string(coords.at(0)) + "X" + std::to_string(coords.at(1)) + "X";
@@ -320,6 +326,7 @@ int main() {
                 gman.Render();
                 man.Render();
                 ban.Render();
+                buildman.Render();
                 
                 al_flip_display();
 
@@ -336,8 +343,31 @@ int main() {
                         std::cout << message << std::endl;
                         
                         man.SetPlayerTurn(playerTurn);
-                        nman.InterperetNetworkMessage(message, man, gman);
+                        std::vector<int> command = nman.InterperetNetworkMessage(message, man, gman, buildman);
                         
+                        if (command.at(0) ==  -1) {
+                            if (playerTurn == PLAYER_ONE) {
+                                std::cout << "Player one wins!" << std::endl;
+                            }
+                            else {
+                                std::cout << "Player two wins!" << std::endl;
+                            }
+                        }
+                        else if (command.at(0) == -2) {
+                            //send soldier kill command across network
+                            //K for kill, then player soldier belonged to(allegiance), then index of soldier in list
+                            std::string sendMessage = "KX" + std::to_string(command.at(0)) + "X" + std::to_string(command.at(1)) + "X";
+                            if (clientOrServer == 2) {
+                                
+                                
+                                SendString(client, sendMessage);
+                            }
+                            else {
+                                
+                                SendString(s, sendMessage);
+                            }
+                        }
+
                     }
                 }
                 
@@ -349,8 +379,30 @@ int main() {
                         std::cout << message << std::endl;
                         
                         man.SetPlayerTurn(playerTurn);
-                        nman.InterperetNetworkMessage(message, man, gman);
-                        
+                        std::vector<int> command = nman.InterperetNetworkMessage(message, man, gman, buildman);
+
+                        if (command.at(0) == -1) {
+                            if (playerTurn == PLAYER_ONE) {
+                                std::cout << "Player one wins!" << std::endl;
+                            }
+                            else {
+                                std::cout << "Player two wins!" << std::endl;
+                            }
+                        }
+                        else if (command.at(0) == -2) {
+                            //send soldier kill command across network
+                            //K for kill, then player soldier belonged to(allegiance), then index of soldier in list
+                            std::string sendMessage = "KX" + std::to_string(command.at(0)) + "X" + std::to_string(command.at(1)) + "X";
+                            if (clientOrServer == 2) {
+
+
+                                SendString(client, sendMessage);
+                            }
+                            else {
+
+                                SendString(s, sendMessage);
+                            }
+                        }
                     }
                 }
 

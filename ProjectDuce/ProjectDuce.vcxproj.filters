@@ -48,6 +48,9 @@
     <ClCompile Include="src\library\NetworkManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\startMenu\Menu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -69,6 +72,9 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="assets\images\redBase.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\menu\button.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
@@ -101,6 +107,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\library\NetworkManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\startMenu\Menu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

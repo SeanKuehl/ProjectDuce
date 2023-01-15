@@ -182,6 +182,7 @@
     <ClCompile Include="src\library\Entity.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\library\Tile.cpp" />
+    <ClCompile Include="src\startMenu\Menu.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -195,6 +196,7 @@
     <Image Include="assets\images\blueBase.png" />
     <Image Include="assets\images\bullet.png" />
     <Image Include="assets\images\EnemySoldier.png" />
+    <Image Include="assets\images\menu\button.png" />
     <Image Include="assets\images\redBase.png" />
     <Image Include="assets\images\soldier.png" />
     <Image Include="assets\images\tile.png" />
@@ -210,6 +212,7 @@
     <ClInclude Include="src\library\Soldier.h" />
     <ClInclude Include="src\library\Entity.h" />
     <ClInclude Include="src\library\Tile.h" />
+    <ClInclude Include="src\startMenu\Menu.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -14,13 +14,17 @@
 #include <string>
 #include <iostream>
 
+#include "startMenu/Menu.h"
 
 int main() {
 
-
-    int clientOrServer = -1;
-    scanf_s("%d", &clientOrServer);
-    printf("%d", clientOrServer);
+    int clientOrServer = Menu();
+    
+    if (clientOrServer == 0) {
+        exit(1);
+    }
+    
+    
     SOCKET s = NULL;
     SOCKET client = NULL;
     int myPlayer = -1;

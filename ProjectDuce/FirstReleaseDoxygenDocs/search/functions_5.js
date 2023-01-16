@@ -1,0 +1,26 @@
+var searchData=
+[
+  ['getactiontaken_142',['GetActionTaken',['../class_soldier.html#ad1fae153f1aba05b5edf58da0e4dc123',1,'Soldier']]],
+  ['getallegiance_143',['GetAllegiance',['../class_building.html#a3f89c63cf1efb8e4429d6f56b24680f0',1,'Building::GetAllegiance()'],['../class_soldier.html#a1eee945d025a2c8c5282733585f09c9f',1,'Soldier::GetAllegiance()']]],
+  ['getbuildinghit_144',['GetBuildingHit',['../class_building_manager.html#a7ba05ff33f6dd7549a64781d1330b651',1,'BuildingManager']]],
+  ['getcenterx_145',['GetCenterX',['../class_soldier.html#ae12e38de9d2c1276973ef008c2cefaf1',1,'Soldier']]],
+  ['getcentery_146',['GetCenterY',['../class_soldier.html#abedfe8ed3b05e08b55ddf2709d2daffd',1,'Soldier']]],
+  ['getdimension_147',['GetDimension',['../class_grid_manager.html#ace807cc27007c3452c332b749acf35de',1,'GridManager']]],
+  ['getgridcoords_148',['GetGridCoords',['../class_building.html#a3ef7f336bf04c8da93ceaf3ba3f6833f',1,'Building::GetGridCoords()'],['../class_grid_manager.html#a2f34ed12f93c5ef6946cd9070fca1cdd',1,'GridManager::GetGridCoords()'],['../class_tile.html#a133a07cb9d5e5ac9c4069feb15264f37',1,'Tile::GetGridCoords()']]],
+  ['getisnull_149',['GetIsNull',['../class_bullet.html#a104a5dc3e26cb0f7497a50506f062392',1,'Bullet']]],
+  ['getselected_150',['GetSelected',['../class_soldier.html#a481fca82a18c29cbddfb00f9da050fa2',1,'Soldier']]],
+  ['getsoldiercoords_151',['GetSoldierCoords',['../class_grid_manager.html#a0ef4c466969ef57a78395b7be70d5e6a',1,'GridManager::GetSoldierCoords()'],['../class_tile.html#a9777ebeb687953ed394b79246a68adf3',1,'Tile::GetSoldierCoords()']]],
+  ['getsoldiercoordsfrommouse_152',['GetSoldierCoordsFromMouse',['../class_grid_manager.html#aa56f5b35ede268228f2d0015a715a7c3',1,'GridManager']]],
+  ['getsoldiergridcoords_153',['GetSoldierGridCoords',['../class_soldier_manager.html#ab73c3fa05b584bace5d37ed67212cb60',1,'SoldierManager']]],
+  ['getsoldierhit_154',['GetSoldierHit',['../class_soldier_manager.html#a1869ed08cfae8d61e42a2c0d1c9e5de7',1,'SoldierManager']]],
+  ['gettilecoordsfromgridcoords_155',['GetTileCoordsFromGridCoords',['../class_grid_manager.html#a6824194c59cffb372e3bc3db0556f5d2',1,'GridManager']]],
+  ['gettilehieght_156',['GetTileHieght',['../class_grid_manager.html#a0b71483770df19ba3474d835f5512c27',1,'GridManager::GetTileHieght()'],['../class_tile.html#a59a88eb2ce93fb420a1c11112fe788c3',1,'Tile::GetTileHieght()']]],
+  ['gettilewidth_157',['GetTileWidth',['../class_grid_manager.html#a50ca1ad27efab50d1b15abfa733c01ee',1,'GridManager::GetTileWidth()'],['../class_tile.html#a5b79b972354ed912986a8342720b871a',1,'Tile::GetTileWidth()']]],
+  ['gettopleftx_158',['GetTopLeftX',['../class_soldier.html#aa64be0e26517b9e4a698e94de2d6533f',1,'Soldier']]],
+  ['gettoplefty_159',['GetTopLeftY',['../class_soldier.html#a3450ae578cd6ab6c8cbdf94018242e36',1,'Soldier']]],
+  ['getxandyposition_160',['GetXAndYPosition',['../class_bullet.html#aa44639c981a0d33ed0a5a2084353f82a',1,'Bullet']]],
+  ['getxoffset_161',['GetXOffset',['../class_grid_manager.html#aa169f68f4befc79215741c5cd7b2d1ba',1,'GridManager']]],
+  ['getxycoords_162',['GetXYCoords',['../class_tile.html#a31d5a71041ce41bb25fc7ae8c8bae9ac',1,'Tile']]],
+  ['getyoffset_163',['GetYOffset',['../class_grid_manager.html#a14ac76e0a7fa0c1f03635af2d5277f67',1,'GridManager']]],
+  ['gridmanager_164',['GridManager',['../class_grid_manager.html#a0f6d971dc01daf9590a74029ada9b10d',1,'GridManager']]]
+];

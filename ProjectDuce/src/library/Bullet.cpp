@@ -1,7 +1,14 @@
 #include "Bullet.h"
 
 
-
+/*! Create a new bullet object given an image, allegiance, xy and target coords.
+*   \param imageName this is the path the bullet's image
+*   \param passedAllegiance this is the allegiance of the bullet
+*   \param x this is the x coord of the bullet
+*   \param y this is the y coord of the bullet
+*   \param targetX x coord of the tile where the bullet is moving towards
+*   \param targetY y coord of the tile where the bullet is moving towards
+*/
 Bullet::Bullet(std::string imageName, int passedAllegiance, int x, int y, int targetX, int targetY) {
 	image = CreateImage(imageDirectory + imageName);
 	allegiance = passedAllegiance;
@@ -15,12 +22,19 @@ Bullet::Bullet(std::string imageName, int passedAllegiance, int x, int y, int ta
 
 }
 
-
+/*! Create a null bullet for the special case where a
+*   bullet object must be created but is only a placeholder
+*/
 Bullet::Bullet() {
 	//this is the null constructor
 	isNull = true;
 }
 
+/*! Given the dimensions of the tiles of the grid,
+*   move the bullet towards it's destination and 
+*   render it.
+*   \param tileMeasures a vector<int> like { tileWidth, tileHieght, xOffset, yOffset }
+*/
 void Bullet::Render(std::vector<int> tileMeasures) {
 	Move(destX, destY, tileMeasures);
 
@@ -28,11 +42,22 @@ void Bullet::Render(std::vector<int> tileMeasures) {
 
 }
 
+/*! return a vector<int> containing the x and y
+*   coordinates of the top left of the image
+*/
 std::vector<int> Bullet::GetXAndYPosition() {
 	std::vector<int> coords = { xPosition, yPosition };
 	return coords;
 }
 
+/*! Given x, y and tileMeasures, determine
+*   wheather or not an attempted shoot from a soldier
+*   is within the 3 tile range. If it is, return true
+*   and if not return false.
+*   \param x the x coordinate of the tile the bullet is being shot at
+*   \param y the y coordinate of the tile the bullet is being shot at
+*   \param tileMeasures a vector<int> like { tileWidth, tileHieght, xOffset, yOffset }
+*/
 bool Bullet::InRange(int x, int y, std::vector<int> tileMeasures) {
 	//do the range check
 	int tileXSize = tileMeasures.at(0) + tileMeasures.at(2);
@@ -57,6 +82,13 @@ bool Bullet::InRange(int x, int y, std::vector<int> tileMeasures) {
 	return true;
 }
 
+
+/*! Given the x and y of a location to move toward and the measures
+*   of the tile grid, move toward that destination until it's reached.
+*   \param x the x of the tile to move toward
+*   \param y the y of the tile to move toward
+*   \param tileMeasures a vector<int> like { tileWidth, tileHieght, xOffset, yOffset }
+*/
 void Bullet::Move(int x, int y, std::vector<int> tileMeasures) {
 	//tileMeasures: tileWidth, tileHieght, xOffset, yOffset
 	destX = x;
@@ -123,11 +155,15 @@ void Bullet::Move(int x, int y, std::vector<int> tileMeasures) {
 	
 }
 
+/*! Return the bullet object's isNull property
+*/
 bool Bullet::GetIsNull() {
 	return isNull;
 }
 
-
+/*! Check wheather or not the bullet has reached the target/destination
+*   set when it was created. Return true if so or false if not.
+*/
 bool Bullet::ReachedDestination() {
 	
 	if (xPosition == destX && yPosition == destY) {

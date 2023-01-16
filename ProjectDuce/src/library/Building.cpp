@@ -1,6 +1,13 @@
 #include "Building.h"
 
-
+/*! Create a building object with image, girc and xy coords
+*   and allegiance.
+*   \param imageName this is the path to the image to load for the building
+*   \param coords these are the top y coord and leftmost x coord of building
+*   \param passedAllegiance the side(player 1 or 2) that the building belongs to
+*   \param passedGridRow the row of the game grid the building belongs to(if grid 10*10, row is 1-10)
+*   \param passedGridColumn the column of the game grid the building belongs to(if grid 10*10, row is 1-10)
+*/
 Building::Building(std::string imageName, std::vector<int> coords, int passedAllegiance, int passedGridRow, int passedGridColumn) {
 	image = CreateImage(imageName);	//image name includes file extension
 	
@@ -17,6 +24,10 @@ Building::Building(std::string imageName, std::vector<int> coords, int passedAll
 	allegiance = passedAllegiance;
 }
 
+/*! Handle the building being hit by an enemy bullet
+*   and taking damage. Return false if building health still
+*   above 0 after hit or true if it is now 0 and the building is destroyed.
+*/
 bool Building::TakeHit() {
 	health -= 1;
 	printf("%d\n", health);
@@ -28,11 +39,19 @@ bool Building::TakeHit() {
 	}
 }
 
+/*! Return a vector<int> with the buildings grid row, and grid column
+*/
 std::vector<int> Building::GetGridCoords() {
 	std::vector<int> myCoords = { gridX, gridY };
 	return myCoords;
 }
 
+/*! Given the x and y coordinates of where the mouse clicked,
+*   determine wheather or not this building was clicked on. 
+*   Return false if not clicked on and true if clicked on.
+*   \param mouseX the x coordinate of where the mouse clicked
+*   \param mouseY the y coordinate of where the mouse clicked
+*/
 bool Building::ClickedOn(int mouseX, int mouseY) {
 	//if mouseX > xPosition(leftmost point) and mouseX < (xPosition + width)(rightmost point)
 	//and if mouseY > yPosition(topmost point) and mouseY < (yPosition + hieght)(bottommost point)
@@ -54,10 +73,14 @@ bool Building::ClickedOn(int mouseX, int mouseY) {
 
 }
 
+/*! return the int(1 or 2) allegiance value of the building
+*/
 int Building::GetAllegiance() {
 	return allegiance;
 }
 
+/*! Render the building's bitmap image at the current x and y coords
+*/
 void Building::Render() {
 
 	
@@ -66,6 +89,8 @@ void Building::Render() {
 
 }
 
+/*! Free the resources of the building's image object
+*/
 void Building::Destroy() {
 	al_destroy_bitmap(image);
 }

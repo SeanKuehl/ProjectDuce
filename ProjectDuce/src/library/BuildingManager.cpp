@@ -1,11 +1,19 @@
 #include "BuildingManager.h"
 
-
+/*! create a BuildingManager object
+*/
 BuildingManager::BuildingManager() {
 
 }
 
-
+/*! Given xy coords, allegiance and grid row and column
+*   create a new Base building and add it to the buildingList
+*   for management by the object.
+*   \param coords the x and y coords of the base
+*   \param passedAllegiance the side(player 1 or 2) the building belongs to
+*   \param row the row of the grid where the building is placed(if grid is 10*10, row is 1-10)
+*   \param column the column of the grid where the building is placed(if grid is 10*10, row is 1-10)
+*/
 void BuildingManager::CreateBase(std::vector<int> coords, int passedAllegiance, int row, int column) {
 	printf("%d, %d\n", row, column);
 	if (passedAllegiance == PLAYER_ONE) {
@@ -17,11 +25,22 @@ void BuildingManager::CreateBase(std::vector<int> coords, int passedAllegiance, 
 	
 }
 
+/*! Set the Building Manager's internal player turn variable
+*   to prevent things getting out of sync
+*/
 void BuildingManager::SetPlayerTurn(int passedTurn) {
 	playerTurn = passedTurn;
 }
 
-
+/*! Given the x and y coords of a mouse's left click,
+*   check if the right allegiance of building was clicked
+*   on to trigger an event. If a building was clicked on, 
+*   return a vector<int> of building's grid coords for help 
+*   placing created soldier. Otherwise return a vector<int> 
+*   containing {-1,-1} to indicate no building was clicked on.
+*   \param x the x coord of the mouse's left click
+*   \param y the y coord of the mouse's left click
+*/
 std::vector<int> BuildingManager::HandleLeftClick(int x, int y) {
 	//return grid coords to create soldier at
     
@@ -44,7 +63,14 @@ std::vector<int> BuildingManager::HandleLeftClick(int x, int y) {
 
 }
 
-
+/*! Check wheather a building of the right allegiance was hit by a bullet
+*   given allegiance, gridX and gridY. If a building was bit deal damage to it,
+*   if this damage kills it return a game over event by returning true.
+*   If the hit doesn't kill it or there is no building hit, return false.
+*   \param allegiance the player who fired the short from one of thier soldiers
+*   \param gridX the gridx coord of where the bullet hit
+*   \param gridY the gridy coord of where the bullet hit
+*/
 bool BuildingManager::GetBuildingHit(int allegiance, int gridX, int gridY) {
 
 	//allegiance is who fired the shot, so only hurt the opposite of allegiance
@@ -73,13 +99,16 @@ bool BuildingManager::GetBuildingHit(int allegiance, int gridX, int gridY) {
 
 }
 
-
+/*! Render all buildings in this object's buildingList
+*/
 void BuildingManager::Render() {
 	for (int i = 0; i < buildingList.size(); i++) {
 		buildingList.at(i).Render();
 	}
 }
 
+/*! Destroy all building in this object's buildingList
+*/
 void BuildingManager::Destroy() {
 	for (int i = 0; i < buildingList.size(); i++) {
 		buildingList.at(i).Destroy();

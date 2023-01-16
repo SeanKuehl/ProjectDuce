@@ -10,10 +10,28 @@ class NetworkManager
 {
 
 public:
+	/*! Create a new network manager object
+	*/
 	NetworkManager() {
 
 	}
 
+	/*! Given a network message and references to the soldier, grid and building managers,
+	*   decode and handle the events coming from the network message.
+	*   If it's the "C" for create command than create a soldier. If 
+	*   it's a "M" for move command than move a soldier to a new position.
+	*   If it's an "H" for hit command than hit the building or soldier involved
+	*   and if they are killed than fire off a kill event. I building is hit and killed
+	*   than trigger a game over event. If it is a "K" for kill
+	*   command than remove the soldier from soldier manager and the game.
+	*   Return a {-1} if a game over event is triggered. Return the 
+	*   output of SoldierManager.GetSoldierHit(...) if a soldier was killed
+	*	and return {-3} if no events were triggered.
+	*   \param message this is the message sent to us over the network by the other player
+	*   \param man this is the soldier manager object
+	*   \param gman this is the grid manager object
+	*   \param bman this is the building manager object
+	*/
 	std::vector<int> InterperetNetworkMessage(std::string message, SoldierManager& man, GridManager& gman, BuildingManager& bman) {
 		
 		std::vector<std::string> messageTokens;

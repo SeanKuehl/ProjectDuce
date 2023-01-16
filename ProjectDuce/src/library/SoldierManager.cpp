@@ -1,6 +1,13 @@
 #include "SoldierManager.h"
 #include "Bullet.h"
 
+
+/*! Given tileMeasures create a new soldier manager object
+*   \params passedTileWidth the width of the game grid tiles
+*   \params passedTileHieght the hieght of the game grid tiles
+*   \params passedXOffset the x coord of the offset from the tile to draw soldiers/bullets
+*   \params passedYOffset the y coord of the offset from the tile to draw soldiers/bullets
+*/
 SoldierManager::SoldierManager(int passedTileWidth, int passedTileHieght, int passedXOffset, int passedYOffset) {
     tileWidth = passedTileWidth;
     tileHieght = passedTileHieght;
@@ -8,7 +15,12 @@ SoldierManager::SoldierManager(int passedTileWidth, int passedTileHieght, int pa
     yOffset = passedYOffset;
 }
 
-
+/*! Given an allegiance and grid coordinates,
+*   create a new soldier and add to manager list
+*   for management.
+*   \param passedAllegiance the player the soldier belongs to
+*   \param coords the row and column of the grid where the soldier will be placed
+*/
 void SoldierManager::CreateSoldier(int passedAllegiance, std::vector<int> coords) {
 	if (passedAllegiance == PLAYER_ONE) {
 		playerOneUnits.push_back(Soldier(passedAllegiance, coords.at(0), coords.at(1)));
@@ -18,10 +30,21 @@ void SoldierManager::CreateSoldier(int passedAllegiance, std::vector<int> coords
 	}
 }
 
+/*! Set the internal playerTurn value
+*   \param passedTurn the value to set the internal playerTurn to
+*/
 void SoldierManager::SetPlayerTurn(int passedTurn) {
     playerTurn = passedTurn;
 }
 
+/*! Handle a left click event by checking wheather any soldier's were clicked
+*   on and weather or not any need to be moved, trigger a move event message
+*   across the network. Return information needed for soldier move or {-1}
+*   if no move event triggered.
+*   \param x x coordinate of mouse left click
+*   \param y y coordinate of mouse left click
+*   \param moveCoords if the soldier does need to move, the coordinates to move to
+*/
 std::vector<int> SoldierManager::HandleLeftClick(int x, int y, std::vector<int> moveCoords) {
     std::vector<int> tileMeasures = { tileWidth, tileHieght, xOffset, yOffset };
     std::vector<int> moveInformation = { -1 };
@@ -71,6 +94,12 @@ std::vector<int> SoldierManager::HandleLeftClick(int x, int y, std::vector<int> 
 
 }
 
+/*! Used by SoldierManager in NetworkManager, this function
+*   takes a soldier at a certain index in the manager's lists and 
+*   moves it to specified xy coordinates
+*   \param index the index in the manager's list the soldier to move is
+*   \param moveCoords the x and y coordinates of where to move the soldier to
+*/
 void SoldierManager::NetworkMove(int index, std::vector<int> moveCoords) {
     std::vector<int> tileMeasures = { tileWidth, tileHieght, xOffset, yOffset };
 
@@ -83,6 +112,14 @@ void SoldierManager::NetworkMove(int index, std::vector<int> moveCoords) {
 
 }
 
+/*! Given destination coordinates and a current position,
+*   determines wheather the bullet attempting to be shot 
+*   will be within the 3 tile range limit. Return true if 
+*   within range and false if not.
+*   \param moveCoords destination to check if within range
+*   \param x x coordinate of current shooting soldier position
+*   \param y y coordinate of current shooting soldier position
+*/
 bool SoldierManager::InRange(std::vector<int> moveCoords, int x, int y) {
     int tileSizeX = tileWidth + xOffset;
     int tileSizeY = tileHieght + yOffset;
@@ -105,7 +142,15 @@ bool SoldierManager::InRange(std::vector<int> moveCoords, int x, int y) {
 
 }
 
-
+/*! Handle a mouse right click event. If a soldier
+*   is selected when there is a right click, try to
+*   fire a bullet if destination is within 3 tile range.
+*   Return a valid Bullet object if there is a valid shot
+*   and one with the isNull attribute set to true if not.
+*   \params x the x coord of the mouse at right click
+*   \params y the y coord of the mouse at right click
+*   \params moveCoords potential destination of the bullet
+*/
 Bullet SoldierManager::HandleRightClick(int x, int y, std::vector<int> moveCoords) {
 
     if (playerTurn == PLAYER_ONE) {
@@ -146,6 +191,12 @@ Bullet SoldierManager::HandleRightClick(int x, int y, std::vector<int> moveCoord
 
 }
 
+/*! Get if a soldier was hit. If not return {-2, -2},
+*   else if a soldier is hit then return {-1, -1}.
+*   If a soldier is killed return { allegiance, index }
+*   \param allegiance the player owner of the soldier that first the shot, opposite of who'll it'll hit
+*   \param tileCoords the coordinates of the tile that was hit by the bullet
+*/
 std::vector<int> SoldierManager::GetSoldierHit(int allegiance, std::vector<int> tileCoords) {
     //allegiance is of the person firing the shot, so only check the enemies of that allegiance for hits
     //tile coords is xPos, yPos, width, hieght of tile
@@ -215,6 +266,10 @@ std::vector<int> SoldierManager::GetSoldierHit(int allegiance, std::vector<int> 
 
 }
 
+/*! remove a soldier from the manager's lists and the game
+*   \param allegiance allegiance of the soldier to erase
+*   \param index the position in the manager list of the soldier to erase
+*/
 void SoldierManager::RemoveSoldier(int allegiance, int index) {
     printf("got here, %d, %d\n", playerOneUnits.size(), playerTwoUnits.size());
     if (allegiance == PLAYER_ONE) {
@@ -232,7 +287,11 @@ void SoldierManager::RemoveSoldier(int allegiance, int index) {
 }
 
 
-
+/*! Get the grid coordinates where we will create a new soldier.
+*   This is used when a soldier is created at a base.
+*   \param gridCoords the coordinates of the base creating the soldier
+*   \param dimension the dimension of the game grid
+*/
 std::vector<int> SoldierManager::GetSoldierGridCoords(std::vector<int> gridCoords, int dimension) {
     //check if grid coords at -1, -1 as this is the null case
     std::vector<int> newCoords = { -1,-1 };
@@ -255,6 +314,9 @@ std::vector<int> SoldierManager::GetSoldierGridCoords(std::vector<int> gridCoord
     return newCoords;
 }
 
+/*! Refresh the actionTaken attribute of all soldiers
+*   in advance of next turn
+*/
 void SoldierManager::EndTurn() {
     for (int i = 0; i < playerOneUnits.size(); i++) {
         playerOneUnits.at(i).SetActionTaken(false);
@@ -265,7 +327,8 @@ void SoldierManager::EndTurn() {
     }
 }
 
-
+/*! Render all soldiers in manager list
+*/
 void SoldierManager::Render() {
     std::vector<int> tileMeasures = { tileWidth, tileHieght, xOffset, yOffset };
     
@@ -280,6 +343,8 @@ void SoldierManager::Render() {
 
 }
 
+/*! Destroy all soldiers in manager list
+*/
 void SoldierManager::Destroy() {
     for (int i = 0; i < playerOneUnits.size(); i++) {
         playerOneUnits.at(i).Destroy();

@@ -4,7 +4,11 @@
 
 
 
-
+/*! Show the user a menu with "start server",
+*   "start client", and "exit" buttons. Return
+*    2 if they choose to start server, and 1
+*    if they choose client.
+*/
 int Menu() {
 
 

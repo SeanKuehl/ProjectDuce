@@ -2,7 +2,9 @@
 A simple strategy game based around high-level maneuvering and planning
 
 #Install information:
-use the provided windows exe to run the project
+use the provided First release playtest package and the two
+shortcuts there to run the game. Note: may need Microsoft
+visual studio installed on system.
 
 #How to play(as of release 1):
 left click on a soldier during your turn to select it or deselect it.
